@@ -1,23 +1,69 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
-
 public class Glitch0 : MonoBehaviour
 {
-    Volume _postProcessVolume;
-    ChromaticAberration _chromabb;
-    public ClampedFloatParameter(float value, float min, float max, bool overrideState = false);
+	public Volume GlobalVolume;
 
-    void Awake()
-    {
-        _postProcessVolume = GameObject.Find("GlobalVolume").GetComponent<Volume>();
-        _postProcessVolume.profile.TryGet(out _chromabb);
+	private bool _isEntered;
+
+	[Range(0f, 1f)]
+	public float ChromaticAberrationLimit = 0.5f;
+    [Range(0f, 1f)]
+    public float FilmGrainLimit = 0.5f;
+    [Range(0f, 1f)]
+    public float VignetteLimit = 0.5f;
+
+    private ChromaticAberration ChromaticAberration;
+    private FilmGrain FilmGrain;
+    private Vignette Vignette;
+
+    public void Start()
+	{
+		GlobalVolume.profile.TryGet(out ChromaticAberration chrobb);
+		ChromaticAberration = chrobb;
+        GlobalVolume.profile.TryGet(out FilmGrain grain);
+        FilmGrain = grain;
+        GlobalVolume.profile.TryGet(out Vignette vign);
+        Vignette = vign;
     }
-    void OnTriggerEnter()
+	void OnTriggerEnter()
+	{
+		_isEntered = true;
+	}
+
+	private void FixedUpdate()
+	{
+		ChromAbb();
+		Grain();
+		VignetteVoid();
+    }
+
+	void ChromAbb()
+	{
+		if (!_isEntered) return;
+		if (ChromaticAberration.intensity.value < ChromaticAberrationLimit)
+		{
+			ChromaticAberration.intensity.value += Time.fixedDeltaTime * 0.15f;
+		}
+	}
+
+	void Grain()
+	{
+        if (!_isEntered) return;
+        if (FilmGrain.intensity.value < FilmGrainLimit)
+		{
+			FilmGrain.intensity.value += Time.fixedDeltaTime * 0.35f;
+		}
+	}
+
+    void VignetteVoid()
     {
-        _chromabb.intensity = ChromaticAberrationIntensity;
-        Debug.Log("1");
+        if (!_isEntered) return;
+        if (Vignette.intensity.value < VignetteLimit)
+        {
+            Vignette.intensity.value += Time.fixedDeltaTime * 0.35f;
+        }
     }
 }

@@ -863,7 +863,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32ae1835d4407a2498676b68bbf4b467, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ChromaticAberrationIntensivity: 0.5
+  GlobalVolume: {fileID: 1343100315}
 --- !u!65 &189689477
 BoxCollider:
   m_ObjectHideFlags: 0
