@@ -3,15 +3,21 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
+
 public class Glitch0 : MonoBehaviour
 {
-    public Volume GlobalVolume;
-    private void Start()
-    {
+    Volume _postProcessVolume;
+    ChromaticAberration _chromabb;
+    public ClampedFloatParameter(float value, float min, float max, bool overrideState = false);
 
-    }
-    private void OnCollisionEnter(Collision collision)
+    void Awake()
     {
-        GlobalVolume.profile.
+        _postProcessVolume = GameObject.Find("GlobalVolume").GetComponent<Volume>();
+        _postProcessVolume.profile.TryGet(out _chromabb);
+    }
+    void OnTriggerEnter()
+    {
+        _chromabb.intensity = ChromaticAberrationIntensity;
+        Debug.Log("1");
     }
 }
