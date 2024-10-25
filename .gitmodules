@@ -1,0 +1,3 @@
+[submodule "Assets/Scripts/Base"]
+	path = Assets/Scripts/Base
+	url = https://github.com/DenisMos/started.git
