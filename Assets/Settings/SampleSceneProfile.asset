@@ -24,7 +24,7 @@ MonoBehaviour:
     m_Value: 0.32
   scatter:
     m_OverrideState: 1
-    m_Value: 0.904
+    m_Value: 0.467
   clamp:
     m_OverrideState: 0
     m_Value: 65472
@@ -61,17 +61,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   active: 1
   color:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: {r: 0, g: 0, b: 0, a: 1}
   center:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: {x: 0.5, y: 0.5}
   intensity:
     m_OverrideState: 1
-    m_Value: 0.117
+    m_Value: 0.25
   smoothness:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0.25
   rounded:
     m_OverrideState: 0
     m_Value: 0
@@ -93,7 +93,7 @@ MonoBehaviour:
     m_Value: 1
   contrast:
     m_OverrideState: 1
-    m_Value: -25
+    m_Value: 10
   colorFilter:
     m_OverrideState: 0
     m_Value: {r: 1, g: 1, b: 1, a: 1}
@@ -143,7 +143,7 @@ MonoBehaviour:
   active: 1
   intensity:
     m_OverrideState: 1
-    m_Value: 0.1
+    m_Value: 0.05
 --- !u!114 &-3634867318311817225
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -159,10 +159,10 @@ MonoBehaviour:
   active: 1
   lift:
     m_OverrideState: 0
-    m_Value: {x: 1, y: 1, z: 1, w: 0.0047690854}
+    m_Value: {x: 1, y: 1, z: 1, w: -0.02079002}
   gamma:
     m_OverrideState: 1
-    m_Value: {x: 1, y: 1, z: 1, w: 0.006389776}
+    m_Value: {x: 1, y: 1, z: 1, w: 0.29106027}
   gain:
     m_OverrideState: 1
     m_Value: {x: 1, y: 1, z: 1, w: 0}
@@ -181,10 +181,10 @@ MonoBehaviour:
   active: 1
   shadows:
     m_OverrideState: 1
-    m_Value: {x: 1, y: 1, z: 1, w: 0.022875562}
+    m_Value: {x: 1, y: 1, z: 1, w: 0.45738035}
   midtones:
     m_OverrideState: 1
-    m_Value: {x: 1, y: 1, z: 1, w: 0.00037191965}
+    m_Value: {x: 1, y: 1, z: 1, w: 0.3326403}
   highlights:
     m_OverrideState: 1
     m_Value: {x: 1, y: 1, z: 1, w: -0.000000014709288}
@@ -306,8 +306,8 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: -17
   tint:
-    m_OverrideState: 0
-    m_Value: 3.8
+    m_OverrideState: 1
+    m_Value: 0
 --- !u!114 &7279905729314321396
 MonoBehaviour:
   m_ObjectHideFlags: 3
