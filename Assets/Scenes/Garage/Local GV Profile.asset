@@ -184,7 +184,7 @@ MonoBehaviour:
     m_Value: {x: 0.5, y: 0.5}
   intensity:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 0.167
   smoothness:
     m_OverrideState: 1
     m_Value: 0.2
@@ -317,7 +317,7 @@ MonoBehaviour:
     m_Value: 0
   cropToFit:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0
 --- !u!114 &-1259966691959516639
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -411,10 +411,10 @@ MonoBehaviour:
     m_Value: 0
   intensity:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 1
   clamp:
     m_OverrideState: 1
-    m_Value: 0.05
+    m_Value: 0.2
 --- !u!114 &1098282947347780057
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -427,14 +427,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e021b4c809a781e468c2988c016ebbea, type: 3}
   m_Name: ColorLookup
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   texture:
     m_OverrideState: 1
     m_Value: {fileID: 0}
     dimension: 1
   contribution:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 0.023
 --- !u!114 &1331480792821049741
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -501,7 +501,7 @@ MonoBehaviour:
         - serializedVersion: 3
           time: 0
           value: 0
-          inSlope: 1
+          inSlope: 0
           outSlope: 1
           tangentMode: 0
           weightedMode: 0
@@ -511,7 +511,7 @@ MonoBehaviour:
           time: 1
           value: 1
           inSlope: 1
-          outSlope: 1
+          outSlope: 0
           tangentMode: 0
           weightedMode: 0
           inWeight: 0
@@ -707,7 +707,7 @@ MonoBehaviour:
     m_Value: 0.9
   intensity:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 0.5
   scatter:
     m_OverrideState: 1
     m_Value: 0.7
@@ -751,7 +751,7 @@ MonoBehaviour:
     m_Value: 0
   intensity:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 0.25
   response:
     m_OverrideState: 1
     m_Value: 0.8
@@ -773,7 +773,7 @@ MonoBehaviour:
   active: 1
   intensity:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 0.15
 --- !u!114 &7852257369067846961
 MonoBehaviour:
   m_ObjectHideFlags: 3
