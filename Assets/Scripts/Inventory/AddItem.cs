@@ -1,9 +1,12 @@
 using Assets.Scripts.Entities;
+using Assets.Scripts.Entities.Func;
+
 using UnityEngine;
 
 public class AddItem : ActivatorBase3D
 {
 	public Inventory playerInventory;
+    public —ursorActivator _cursorActivator;
 
 	[Header("AddItem")]
 	public string Name = "Rabbit Key";
@@ -11,8 +14,29 @@ public class AddItem : ActivatorBase3D
 	public long ID = 1;
 	public Sprite Sprite = null;
 
-	public void FixedUpdate()
+    private void Start()
+    {
+        playerInventory = GameObject.FindAnyObjectByType<Inventory>();
+        _cursorActivator = GetComponent<—ursorActivator>();
+
+        if (!playerInventory)
+            throw new System.Exception("Not found");
+
+        _cursorActivator.Message = Name;
+    }
+
+    //œÓ‰ÓÌÍË.
+    public void Add()
 	{
-		Item key = new Item(Name, Description, ID, Sprite);
-	}
+        var oldItem = playerInventory.Contain(Name);
+        if (oldItem == null)
+        {
+            Item key = new Item(Name, Description, ID, 1, Sprite);
+            playerInventory.AddItem(key);
+        }
+        else
+        {
+            oldItem.count++;
+        }
+    }
 }

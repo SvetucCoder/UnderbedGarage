@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using static UnityEditor.Progress;
 
@@ -34,4 +36,6 @@ public class Inventory : MonoBehaviour
             Debug.Log("Inventory Item: " + item.itemName);
         }
     }
+
+    public Item Contain(string name) => items.FirstOrDefault(x=>x.itemName == name);
 }
