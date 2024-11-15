@@ -22,7 +22,7 @@ public class AddItem : ActivatorBase3D
         if (!playerInventory)
             throw new System.Exception("Not found");
 
-        _cursorActivator.Message = Name;
+        //_cursorActivator.Message = Name;
     }
 
     //Подонки.
