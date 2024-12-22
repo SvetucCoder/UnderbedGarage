@@ -12583,6 +12583,7 @@ GameObject:
   - component: {fileID: 1539580489}
   - component: {fileID: 1539580488}
   - component: {fileID: 1539580490}
+  - component: {fileID: 1539580491}
   m_Layer: 5
   m_Name: Inv
   m_TagString: Untagged
@@ -12673,6 +12674,23 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1539580491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1539580486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25d9e12a61ef70241bf2bf9968de8175, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerInventory: {fileID: 0}
+  _rect: {fileID: 1539580487}
+  animator: {fileID: 0}
+  _isClosed: 0
+  _isOpened: 0
 --- !u!1001 &1555334607
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14777,7 +14795,6 @@ GameObject:
   - component: {fileID: 1863749954}
   - component: {fileID: 1863749953}
   - component: {fileID: 1863749952}
-  - component: {fileID: 1863749956}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -14868,19 +14885,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &1863749956
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1863749951}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25d9e12a61ef70241bf2bf9968de8175, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerInventory: {fileID: 0}
 --- !u!1 &1882860356
 GameObject:
   m_ObjectHideFlags: 0
