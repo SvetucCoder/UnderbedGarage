@@ -1,5 +1,4 @@
-using Assets.Scripts.Entities.Func.Utilits;
-using Assets.Scripts.Entities;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -47,5 +46,16 @@ public class Interact : MonoBehaviour
     public virtual void ExecutePress()
     {
         UnityAPI.ExecuteUnityEvent(_pressEvent);
+    }
+}
+internal static class UnityAPI
+{
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void ExecuteUnityEvent(this UnityEvent unityEvent)
+    {
+        if (unityEvent != null)
+        {
+            unityEvent.Invoke();
+        }
     }
 }
