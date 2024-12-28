@@ -2,382 +2,337 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Rendering;
+using UnityEngine.EventSystems;
 
 namespace Fragsurf.Movement {
 
-    /// <summary>
-    /// Easily add a surfable character to the scene
-    /// </summary>
-    [AddComponentMenu ("Fragsurf/Surf Character")]
-    public class SurfCharacter : MonoBehaviour, ISurfControllable {
 
-        public enum ColliderType {
-            Capsule,
-            Box
-        }
+    public class SurfCharacter : MonoBehaviour {
+        public LayerMask layerMask;
+        public float rayDistance = 100f;
+        public KeyCode InteractKey = KeyCode.E;
+
+        public float transitionSpeed = 5f;
+
+        public float bobSpeed = 10f; // Скорость покачивания
+        public float bobAmount = 0.05f; // Амплитуда покачивания
+
+        private float defaultYPosition;
+        private float timer = 0f;
+
+        public Transform playerTransform; // Ссылка на игрока (для отслеживания скорости)
 
         ///// Fields /////
 
         [Header("Physics Settings")]
         public Vector3 colliderSize = new Vector3 (1f, 2f, 1f);
-        [HideInInspector] public ColliderType collisionType { get { return ColliderType.Box; } } // Capsule doesn't work anymore; I'll have to figure out why some other time, sorry.
-        public float weight = 75f;
-        public float rigidbodyPushForce = 2f;
-        public bool solidCollider = false;
 
-        [Header("View Settings")]
-        public Transform viewTransform;
-        public Transform playerRotationTransform;
 
         [Header ("Crouching setup")]
         public float crouchingHeightMultiplier = 0.5f;
         public float crouchingSpeed = 10f;
         float defaultHeight;
-        bool allowCrouch = true; // This is separate because you shouldn't be able to toggle crouching on and off during gameplay for various reasons
-
-        [Header ("Features")]
-        public bool crouchingEnabled = true;
-        public bool slidingEnabled = false;
-        public bool laddersEnabled = true;
-        public bool supportAngledLadders = true;
+        bool allowCrouch = true; 
 
         [Header ("Step offset (can be buggy, enable at your own risk)")]
         public bool useStepOffset = false;
         public float stepOffset = 0.35f;
 
         [Header ("Movement Config")]
+
         [SerializeField]
         public MovementConfig movementConfig;
         
-        private GameObject _groundObject;
-        private Vector3 _baseVelocity;
-        private Collider _collider;
-        private Vector3 _angles;
-        private Vector3 _startPosition;
-        private GameObject _colliderObject;
-        private GameObject _cameraWaterCheckObject;
-        private CameraWaterCheck _cameraWaterCheck;
+        public CapsuleCollider _collider;
 
-        private MoveData _moveData = new MoveData ();
-        private SurfController _controller = new SurfController ();
-
-        private Rigidbody rb;
-
-        private List<Collider> triggers = new List<Collider> ();
-        private int numberOfTriggers = 0;
-
-        private bool underwater = false;
-
-        ///// Properties /////
-
-        public MoveType moveType { get { return MoveType.Walk; } }
-        public MovementConfig moveConfig { get { return movementConfig; } }
-        public MoveData moveData { get { return _moveData; } }
-        public new Collider collider { get { return _collider; } }
-
-        public GameObject groundObject {
-
-            get { return _groundObject; }
-            set { _groundObject = value; }
-
-        }
-
-        public Vector3 baseVelocity { get { return _baseVelocity; } }
-
-        public Vector3 forward { get { return viewTransform.forward; } }
-        public Vector3 right { get { return viewTransform.right; } }
-        public Vector3 up { get { return viewTransform.up; } }
-
-        Vector3 prevPosition;
-
+        public static GameObject Player;
+        public static Transform PlayerTransform;
+        public static Vector3 PlayerPos;
+        public static Inventory Inventory;
         ///// Methods /////
 
-		private void OnDrawGizmos()
+        private void OnDrawGizmos()
 		{
 			Gizmos.color = Color.red;
 			Gizmos.DrawWireCube( transform.position, colliderSize );
 		}
 		
         private void Awake () {
-            
-            _controller.playerTransform = playerRotationTransform;
-            
-            if (viewTransform != null) {
+            Player = gameObject;
+            PlayerTransform = gameObject.transform;
+            PlayerPos = gameObject.transform.position;
+            Inventory = GetComponent<Inventory>();
 
-                _controller.camera = viewTransform;
-                _controller.cameraYPos = viewTransform.localPosition.y;
+            if (cameraTransform == null)
+                cameraTransform = GetComponent<Transform>();
 
+            defaultYPosition = cameraTransform.localPosition.y;
+
+        }
+        public Camera mainCamera;
+        public GameObject interactobject;
+        Interact interact;
+
+
+        private void Start () {
+            defaultRotation = cameraTransform.localRotation;
+
+            rb = GetComponent<Rigidbody>();
+
+            // Отключаем физическое вращение Rigidbody
+            rb.freezeRotation = true;
+
+            // Прячем курсор
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+        [Header("Скорость")]
+        public float walkSpeed = 5f; // Скорость ходьбы
+        public float sprintSpeed = 10f; // Скорость бега
+        public float speedTransitionRate = 10f; // Скорость плавного перехода между ходьбой и бегом
+
+        private float currentSpeed; // Текущая скорость игрока
+
+        [Header("Движение")]
+        public float moveSpeed = 5f; // Скорость передвижения
+        public float smoothAcceleration = 10f; // Плавность разгона
+
+        [Header("Прыжок")]
+        public float jumpForce = 5f; // Сила прыжка
+        public LayerMask groundLayer; // Слой земли
+        public float groundCheckDistance = 0.2f; // Дистанция проверки земли
+
+        [Header("Камера")]
+        public Transform cameraTransform; // Ссылка на камеру
+        public float mouseSensitivity = 150f; // Чувствительность мыши
+        public float maxLookAngle = 90f; // Максимальный угол наклона камеры вверх/вниз
+        public float cameraSmoothSpeed = 5f;
+
+
+        private Rigidbody rb;
+        private Vector3 moveDirection;
+        private float verticalLookRotation = 0f;
+
+        public Camera playerCamera;
+        public float defaultFOV = 60f;
+        public float sprintFOV = 75f;
+        public float fovTransitionSpeed = 5f;
+
+        public float tiltAngle = 10f; // Угол наклона
+        public float tiltSpeed = 5f; // Скорость перехода
+
+        private Quaternion defaultRotation;
+
+        public float walkBobSpeed = 10f; // Скорость покачивания при ходьбе
+        public float walkBobAmount = 0.05f; // Амплитуда покачивания при ходьбе
+        public float sprintBobSpeed = 15f; // Скорость покачивания при беге
+        public float sprintBobAmount = 0.1f; // Амплитуда покачивания при беге
+        public float smoothReturnSpeed = 5f; // Скорость плавного возвращения
+        void Interact()
+        {
+            Vector3 mousePosition = Input.mousePosition;
+
+            Ray ray = mainCamera.ScreenPointToRay(mousePosition);
+
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, rayDistance, layerMask))
+            {
+                if (interactobject != hit.collider.gameObject)
+                {
+                    if (interact != null) interact.ExecuteUnhover();
+                    interactobject = hit.collider.gameObject;
+                    interact = interactobject.GetComponent<Interact>();
+                    interact.ExecuteHover();
+                }
+                else if (interactobject != null && interact != null)
+                {
+                    interact.ExecutePresshover();
+                    if (Input.GetKeyDown(InteractKey))
+                    {
+                        interact.ExecuteClick();
+                    }
+                    if (Input.GetKeyUp(InteractKey))
+                    {
+                        interact.ExecuteUnclick();
+                    }
+                    if (Input.GetKey(InteractKey))
+                    {
+                        interact.ExecutePress();
+                    }
+                }
             }
+            else
+            {
+                if (interact != null) interact.ExecuteUnhover();
+                interactobject = null;
+                interact = null;
+            }
+        }
+
+        private bool isFalling = false;           // Проверка падения
+        public float jumpCameraOffset = 0.2f;     // Смещение камеры при прыжке
+        public float fallCameraOffset = 0.2f;     // Смещение камеры при падении
+        public float jumpReturnSpeed = 2f;        // Скорость возврата камеры после прыжка
+        private bool isGrounded = true;
+        void Headbobbing()
+        {
+            if (IsPlayerMoving() && isGrounded)
+            {
+                // Определяем параметры для ходьбы или бега
+                bool isSprinting = Input.GetKey(KeyCode.LeftShift);
+                float currentBobSpeed = isSprinting ? sprintBobSpeed : walkBobSpeed;
+                float currentBobAmount = isSprinting ? sprintBobAmount : walkBobAmount;
+
+                // Обновляем таймер и высчитываем новую позицию камеры
+                timer += Time.deltaTime * currentBobSpeed;
+                float newY = defaultYPosition + Mathf.Sin(timer) * currentBobAmount;
+                cameraTransform.localPosition = new Vector3(cameraTransform.localPosition.x, newY, cameraTransform.localPosition.z);
+            }
+            else if (isJumping)
+            {
+                // Смещение камеры вверх при прыжке
+                cameraTransform.localPosition = Vector3.Lerp(
+                    cameraTransform.localPosition,
+                    new Vector3(cameraTransform.localPosition.x, defaultYPosition + jumpCameraOffset, cameraTransform.localPosition.z),
+                    Time.deltaTime * jumpReturnSpeed
+                );
+            }
+            else if (!isGrounded && rb.linearVelocity.y < 0)
+            {
+                // Смещение камеры вниз и добавление тряски
+                fallShakeTimer += Time.deltaTime * fallShakeSpeed;
+                float shakeOffset = Mathf.Sin(fallShakeTimer) * fallShakeAmount;
+                cameraTransform.localPosition = Vector3.Lerp(
+                    cameraTransform.localPosition,
+                    new Vector3(cameraTransform.localPosition.x, defaultYPosition - fallCameraOffset + shakeOffset, cameraTransform.localPosition.z),
+                    Time.deltaTime * jumpReturnSpeed
+                );
+            }
+            else
+            {
+                SmoothReturn();
+            }
+        }
+
+        void SmoothReturn()
+        {
+            // Плавный возврат камеры в исходное положение
+            cameraTransform.localPosition = Vector3.Lerp(
+                cameraTransform.localPosition,
+                new Vector3(cameraTransform.localPosition.x, defaultYPosition, cameraTransform.localPosition.z),
+                Time.deltaTime * jumpReturnSpeed
+            );
+        }
+
+
+        void HandleMovementInput()
+        {
+            float moveX = Input.GetAxis("Horizontal");
+            float moveZ = Input.GetAxis("Vertical");
+
+            bool isSprinting = Input.GetKey(KeyCode.LeftShift);
+
+            float targetSpeed = isSprinting ? sprintSpeed : walkSpeed;
+
+            currentSpeed = Mathf.Lerp(currentSpeed, targetSpeed, Time.deltaTime * speedTransitionRate);
+
+            Vector3 moveHorizontal = transform.right * moveX;
+            Vector3 moveVertical = transform.forward * moveZ;
+
+            moveDirection = (moveHorizontal + moveVertical).normalized * currentSpeed;
+        }
+        private bool isJumping = false;
+        public float airControlFactor = 0.5f;
+        void HandleJumpInput()
+        {
+            isGrounded = IsGrounded();
+
+            if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+            {
+                Jump();
+            }
+        }
+        public float fallShakeAmount = 0.05f;     // Амплитуда тряски камеры при падении
+        public float fallShakeSpeed = 25f;        // Скорость тряски камеры при падении
+        private float fallShakeTimer = 0f;
+
+        void Jump()
+        {
+            // Сброс вертикальной скорости для стабильного прыжка
+            // Сброс вертикальной скорости для стабильного прыжка
+            rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
+
+            // Добавление силы вверх
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            isJumping = true;
+            isFalling = false;
+        }
+        private void FixedUpdate()
+        {
+            MoveCharacter();
+            if (!IsGrounded() && isJumping)
+            {
+                Vector3 airControl = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) * airControlFactor;
+                rb.AddForce(airControl, ForceMode.Acceleration);
+            }
+            else
+            {
+                isJumping = false;
+            }
+        }
+
+        void HandleMouseLook()
+        {
+            // Получаем вход от мыши
+            float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
+            float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+
+            // Поворачиваем персонажа по оси Y
+            transform.Rotate(Vector3.up * mouseX);
+
+            // Поворачиваем камеру по оси X (вверх/вниз)
+            verticalLookRotation -= mouseY;
+            verticalLookRotation = Mathf.Clamp(verticalLookRotation, -maxLookAngle, maxLookAngle);
+
+            cameraTransform.localRotation = Quaternion.Euler(verticalLookRotation, 0f, 0f);
+
+        }
+        void MoveCharacter()
+        {
+            // Плавно применяем движение к Rigidbody
+            Vector3 targetVelocity = new Vector3(moveDirection.x, rb.linearVelocity.y, moveDirection.z);
+            Vector3 smoothedVelocity = Vector3.Lerp(rb.linearVelocity, targetVelocity, Time.fixedDeltaTime * smoothAcceleration);
+            rb.linearVelocity = smoothedVelocity;
 
         }
 
-        private void Start () {
-            
-            _colliderObject = new GameObject ("PlayerCollider");
-            _colliderObject.tag = "Player";
-            _colliderObject.layer = gameObject.layer;
-            _colliderObject.transform.SetParent (transform);
-            _colliderObject.transform.rotation = Quaternion.identity;
-            _colliderObject.transform.localPosition = Vector3.zero;
-            _colliderObject.transform.SetSiblingIndex (0);
+        bool IsGrounded()
+        {
 
-            // Water check
-            _cameraWaterCheckObject = new GameObject ("Camera water check");
-            _cameraWaterCheckObject.layer = gameObject.layer;
-            _cameraWaterCheckObject.transform.position = viewTransform.position;
-
-            SphereCollider _cameraWaterCheckSphere = _cameraWaterCheckObject.AddComponent<SphereCollider> ();
-            _cameraWaterCheckSphere.radius = 0.1f;
-            _cameraWaterCheckSphere.isTrigger = true;
-
-            Rigidbody _cameraWaterCheckRb = _cameraWaterCheckObject.AddComponent<Rigidbody> ();
-            _cameraWaterCheckRb.useGravity = false;
-            _cameraWaterCheckRb.isKinematic = true;
-
-            _cameraWaterCheck = _cameraWaterCheckObject.AddComponent<CameraWaterCheck> ();
-
-            prevPosition = transform.position;
-
-            if (viewTransform == null)
-                viewTransform = Camera.main.transform;
-
-            if (playerRotationTransform == null && transform.childCount > 0)
-                playerRotationTransform = transform.GetChild (0);
-
-            _collider = gameObject.GetComponent<Collider> ();
-
-            if (_collider != null)
-                GameObject.Destroy (_collider);
-
-            // rigidbody is required to collide with triggers
-            rb = gameObject.GetComponent<Rigidbody> ();
-            if (rb == null)
-                rb = gameObject.AddComponent<Rigidbody> ();
-
-            allowCrouch = crouchingEnabled;
-
-            rb.isKinematic = true;
-            rb.useGravity = false;
-            rb.angularDamping = 0f;
-            rb.linearDamping = 0f;
-            rb.mass = weight;
-
-
-            switch (collisionType) {
-
-                // Box collider
-                case ColliderType.Box:
-
-                _collider = _colliderObject.AddComponent<BoxCollider> ();
-
-                var boxc = (BoxCollider)_collider;
-                boxc.size = colliderSize;
-
-                defaultHeight = boxc.size.y;
-
-                break;
-
-                // Capsule collider
-                case ColliderType.Capsule:
-
-                _collider = _colliderObject.AddComponent<CapsuleCollider> ();
-
-                var capc = (CapsuleCollider)_collider;
-                capc.height = colliderSize.y;
-                capc.radius = colliderSize.x / 2f;
-
-                defaultHeight = capc.height;
-
-                break;
-
-            }
-
-            _moveData.slopeLimit = movementConfig.slopeLimit;
-
-            _moveData.rigidbodyPushForce = rigidbodyPushForce;
-
-            _moveData.slidingEnabled = slidingEnabled;
-            _moveData.laddersEnabled = laddersEnabled;
-            _moveData.angledLaddersEnabled = supportAngledLadders;
-
-            _moveData.playerTransform = transform;
-            _moveData.viewTransform = viewTransform;
-            _moveData.viewTransformDefaultLocalPos = viewTransform.localPosition;
-
-            _moveData.defaultHeight = defaultHeight;
-            _moveData.crouchingHeight = crouchingHeightMultiplier;
-            _moveData.crouchingSpeed = crouchingSpeed;
-            
-            _collider.isTrigger = !solidCollider;
-            _moveData.origin = transform.position;
-            _startPosition = transform.position;
-
-            _moveData.useStepOffset = useStepOffset;
-            _moveData.stepOffset = stepOffset;
-
+            return Physics.Raycast(transform.position, Vector3.down, groundCheckDistance,groundLayer);
         }
 
         private void Update () {
+            float targetFOV = Input.GetKey(KeyCode.LeftShift) ? sprintFOV : defaultFOV;
+            playerCamera.fieldOfView = Mathf.Lerp(playerCamera.fieldOfView, targetFOV, Time.deltaTime * fovTransitionSpeed);
 
-            _colliderObject.transform.rotation = Quaternion.identity;
+            Quaternion targetRotation = Input.GetKey(KeyCode.LeftShift) ? Quaternion.Euler(tiltAngle, 0, 0) : defaultRotation;
 
+            cameraTransform.localRotation = Quaternion.Lerp(cameraTransform.localRotation, targetRotation, Time.deltaTime * tiltSpeed);
 
-            //UpdateTestBinds ();
-            UpdateMoveData ();
-            
-            // Previous movement code
-            Vector3 positionalMovement = transform.position - prevPosition;
-            transform.position = prevPosition;
-            moveData.origin += positionalMovement;
+            Headbobbing();
 
-            // Triggers
-            if (numberOfTriggers != triggers.Count) {
-                numberOfTriggers = triggers.Count;
-
-                underwater = false;
-                triggers.RemoveAll (item => item == null);
-                foreach (Collider trigger in triggers) {
-
-                    if (trigger == null)
-                        continue;
-
-                    if (trigger.GetComponentInParent<Water> ())
-                        underwater = true;
-
-                }
-
-            }
-
-            _moveData.cameraUnderwater = _cameraWaterCheck.IsUnderwater ();
-            _cameraWaterCheckObject.transform.position = viewTransform.position;
-            moveData.underwater = underwater;
-            
-            if (allowCrouch)
-                _controller.Crouch (this, movementConfig, Time.deltaTime);
-
-            _controller.ProcessMovement (this, movementConfig, Time.deltaTime);
-
-            transform.position = moveData.origin;
-            prevPosition = transform.position;
-
-            _colliderObject.transform.rotation = Quaternion.identity;
-
+            Interact();
+            HandleMovementInput();
+            HandleJumpInput();
+            HandleMouseLook();
         }
         
-        private void UpdateTestBinds () {
+        private bool IsPlayerMoving()
+        {
+            if (playerTransform == null) return false;
 
-            if (Input.GetKeyDown (KeyCode.Backspace))
-                ResetPosition ();
-
-        }
-
-        private void ResetPosition () {
-            
-            moveData.velocity = Vector3.zero;
-            moveData.origin = _startPosition;
-
-        }
-
-        private void UpdateMoveData () {
-            
-            _moveData.verticalAxis = Input.GetAxisRaw ("Vertical");
-            _moveData.horizontalAxis = Input.GetAxisRaw ("Horizontal");
-
-            _moveData.sprinting = Input.GetButton ("Sprint");
-            
-            if (Input.GetButtonDown ("Crouch"))
-                _moveData.crouching = true;
-
-            if (!Input.GetButton ("Crouch"))
-                _moveData.crouching = false;
-            
-            bool moveLeft = _moveData.horizontalAxis < 0f;
-            bool moveRight = _moveData.horizontalAxis > 0f;
-            bool moveFwd = _moveData.verticalAxis > 0f;
-            bool moveBack = _moveData.verticalAxis < 0f;
-            bool jump = Input.GetButton ("Jump");
-
-            if (!moveLeft && !moveRight)
-                _moveData.sideMove = 0f;
-            else if (moveLeft)
-                _moveData.sideMove = -moveConfig.acceleration;
-            else if (moveRight)
-                _moveData.sideMove = moveConfig.acceleration;
-
-            if (!moveFwd && !moveBack)
-                _moveData.forwardMove = 0f;
-            else if (moveFwd)
-                _moveData.forwardMove = moveConfig.acceleration;
-            else if (moveBack)
-                _moveData.forwardMove = -moveConfig.acceleration;
-            
-            if (Input.GetButtonDown ("Jump"))
-                _moveData.wishJump = true;
-
-            if (!Input.GetButton ("Jump"))
-                _moveData.wishJump = false;
-            
-            _moveData.viewAngles = _angles;
-
-        }
-
-        private void DisableInput () {
-
-            _moveData.verticalAxis = 0f;
-            _moveData.horizontalAxis = 0f;
-            _moveData.sideMove = 0f;
-            _moveData.forwardMove = 0f;
-            _moveData.wishJump = false;
-
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="angle"></param>
-        /// <param name="from"></param>
-        /// <param name="to"></param>
-        /// <returns></returns>
-        public static float ClampAngle (float angle, float from, float to) {
-
-            if (angle < 0f)
-                angle = 360 + angle;
-
-            if (angle > 180f)
-                return Mathf.Max (angle, 360 + from);
-
-            return Mathf.Min (angle, to);
-
-        }
-
-        private void OnTriggerEnter (Collider other) {
-            
-            if (!triggers.Contains (other))
-                triggers.Add (other);
-
-        }
-
-        private void OnTriggerExit (Collider other) {
-            
-            if (triggers.Contains (other))
-                triggers.Remove (other);
-
-        }
-
-        private void OnCollisionStay (Collision collision) {
-
-            if (collision.rigidbody == null)
-                return;
-
-            Vector3 relativeVelocity = collision.relativeVelocity * collision.rigidbody.mass / 50f;
-            Vector3 impactVelocity = new Vector3 (relativeVelocity.x * 0.0025f, relativeVelocity.y * 0.00025f, relativeVelocity.z * 0.0025f);
-
-            float maxYVel = Mathf.Max (moveData.velocity.y, 10f);
-            Vector3 newVelocity = new Vector3 (moveData.velocity.x + impactVelocity.x, Mathf.Clamp (moveData.velocity.y + Mathf.Clamp (impactVelocity.y, -0.5f, 0.5f), -maxYVel, maxYVel), moveData.velocity.z + impactVelocity.z);
-
-            newVelocity = Vector3.ClampMagnitude (newVelocity, Mathf.Max (moveData.velocity.magnitude, 30f));
-            moveData.velocity = newVelocity;
-
+            return Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0;
         }
 
     }

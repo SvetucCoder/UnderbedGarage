@@ -33,7 +33,7 @@ QualitySettings:
     realtimeGICPUUsage: 100
     adaptiveVsyncExtraA: 0
     adaptiveVsyncExtraB: 0
-    lodBias: 2
+    lodBias: 1
     maximumLODLevel: 0
     enableLODCrossFade: 1
     streamingMipmapsActive: 1
@@ -47,7 +47,7 @@ QualitySettings:
     asyncUploadBufferSize: 16
     asyncUploadPersistentBuffer: 1
     resolutionScalingFixedDPIFactor: 1
-    customRenderPipeline: {fileID: 11400000, guid: 7b7fd9122c28c4d15b667c7040e3b3fd, type: 2}
+    customRenderPipeline: {fileID: 11400000, guid: 36dd385e759c96147b6463dcd1149c11, type: 2}
     terrainQualityOverrides: 0
     terrainPixelError: 1
     terrainDetailDensityScale: 1
@@ -61,4 +61,5 @@ QualitySettings:
     - Android
     - iPhone
   m_TextureMipmapLimitGroupNames: []
-  m_PerPlatformDefaultQuality: {}
+  m_PerPlatformDefaultQuality:
+    Standalone: 0

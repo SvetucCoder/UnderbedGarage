@@ -7,8 +7,8 @@ LightingSettings:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: New Lighting Settings
-  serializedVersion: 8
-  m_EnableBakedLightmaps: 0
+  serializedVersion: 9
+  m_EnableBakedLightmaps: 1
   m_EnableRealtimeLightmaps: 1
   m_RealtimeEnvironmentLighting: 1
   m_BounceScale: 1
@@ -19,13 +19,13 @@ LightingSettings:
   m_LightmapMaxSize: 2048
   m_LightmapSizeFixed: 0
   m_UseMipmapLimits: 1
-  m_BakeResolution: 120
-  m_Padding: 5
+  m_BakeResolution: 60
+  m_Padding: 3
   m_LightmapCompression: 0
   m_AO: 1
-  m_AOMaxDistance: 1
-  m_CompAOExponent: 1
-  m_CompAOExponentDirect: 0
+  m_AOMaxDistance: 200
+  m_CompAOExponent: 2.57
+  m_CompAOExponentDirect: 1.62
   m_ExtractAO: 0
   m_MixedBakeMode: 2
   m_LightmapsBakeMode: 1
@@ -34,7 +34,7 @@ LightingSettings:
   m_ExportTrainingData: 0
   m_EnableWorkerProcessBaking: 1
   m_TrainingDataDestination: TrainingData
-  m_RealtimeResolution: 2
+  m_RealtimeResolution: 4
   m_ForceWhiteAlbedo: 0
   m_ForceUpdates: 0
   m_PVRCulling: 1
