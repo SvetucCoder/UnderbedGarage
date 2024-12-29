@@ -76,7 +76,6 @@ public class Inventory : MonoBehaviour
     }
     public RectTransform rectTransform;
     bool opened;
-    public KeyCode key = KeyCode.Tab;
     int itemselected;
     bool drag;
     int dragableobj;
@@ -88,7 +87,7 @@ public class Inventory : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(key)) OpenInventory();
+        if (Input.GetKeyDown(SurfCharacter.key.Inventory)) OpenInventory();
         if (Input.GetKeyDown(KeyCode.Alpha1)) ChangeItemView(0);
         if (Input.GetKeyDown(KeyCode.Alpha2)) ChangeItemView(1);
         if (Input.GetKeyDown(KeyCode.Alpha3)) ChangeItemView(2);
