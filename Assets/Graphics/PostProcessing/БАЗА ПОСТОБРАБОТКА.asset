@@ -52,7 +52,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42ef2681fa3dc8c4fa031f044e68c63f, type: 3}
   m_Name: GlobalIllumination
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   quality:
     m_OverrideState: 1
     m_Value: 3
@@ -359,7 +359,7 @@ MonoBehaviour:
   active: 1
   indirectDiffuseLightingMultiplier:
     m_OverrideState: 1
-    m_Value: 150
+    m_Value: 5
   indirectDiffuseLightingLayers:
     m_OverrideState: 1
     m_Value: 65535
@@ -465,7 +465,7 @@ MonoBehaviour:
     m_OverrideState: 1
     m_Value: 1
   tracing:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 2
   m_MinSmoothness:
     m_OverrideState: 1
@@ -710,51 +710,51 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   active: 0
   enable:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 1
   layerMask:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value:
       serializedVersion: 2
       m_Bits: 4294967295
   maximumSamples:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 1
   minimumDepth:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 1
   maximumDepth:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 1
   maximumIntensity:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 1
   denoising:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 2
   useAOVs:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 1
   temporal:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 1
   separateVolumetrics:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 1
   asyncDenoising:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 1
   skyImportanceSampling:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 0
   tilingParameters:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: {x: 1, y: 1, z: 0, w: 0}
   seedMode:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 0
   customSeed:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 0
 --- !u!114 &-1703095841647259171
 MonoBehaviour:
@@ -1106,7 +1106,7 @@ MonoBehaviour:
   active: 1
   enable:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0
   triangleSize:
     m_OverrideState: 1
     m_Value: 30
@@ -1393,7 +1393,7 @@ MonoBehaviour:
     m_OverrideState: 1
     m_Value: 1
   rayTracing:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 1
   intensity:
     m_OverrideState: 1
@@ -1557,7 +1557,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   active: 0
   cameraClusterRange:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 10
 --- !u!114 &8352157752725756683
 MonoBehaviour:
@@ -1645,9 +1645,6 @@ MonoBehaviour:
   cullingDistance:
     m_OverrideState: 1
     m_Value: 1000
-  minSolidAngle:
-    m_OverrideState: 1
-    m_Value: 4
 --- !u!114 &8597762178197899212
 MonoBehaviour:
   m_ObjectHideFlags: 3
