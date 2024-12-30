@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEditor;
@@ -16,7 +17,6 @@ public class Interact : MonoBehaviour
     public List<AudioManager> AudioManager = new List<AudioManager>();
 
     public List<AnimationManager> AnimationManager = new List<AnimationManager>();
-
     public void ExecuteAnimationEvent(int ID)
     {
         AnimationManager[ID].Execute();
@@ -30,6 +30,9 @@ public class Interact : MonoBehaviour
         AudioManager[ID].Execute();
     }
 }
+
+
+
 internal static class UnityAPI
 {
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -143,6 +146,8 @@ public class AnimationManager
         }
     }
 }
+
+
 [System.Serializable]
 public class AnimationList
 {
