@@ -13,7 +13,6 @@ using UnityEngine.InputSystem;
         public float rayDistance = 100f;
         public static KeyManager key;
         GameObject interactobject;
-        Interact interact;
         [Header("Camera Settings")]
         public float mouseSensitivity = 150f;
         public float maxLookAngle = 90f;
@@ -87,36 +86,16 @@ using UnityEngine.InputSystem;
 
         if (Physics.Raycast(ray, out hit, rayDistance, layerMask))
         {
-            if (interactobject != hit.collider.gameObject)
+            if (hit.collider.gameObject.TryGetComponent<AnimationCreator>(out AnimationCreator AnimationCreator))
             {
-                if (interact != null) interact.interact.ExecuteUnhover();
-                interactobject = hit.collider.gameObject;
-                interact = interactobject.GetComponent<Interact>();
-                interact.interact.ExecuteHover();
-            }
-            else if (interactobject != null && interact != null)
-            {
-                interact.interact.ExecutePresshover();
                 if (Input.GetKeyDown(key.Interact))
                 {
-                    interact.interact.ExecuteClick();
-                }
-                if (Input.GetKeyUp(key.Interact))
-                {
-                    interact.interact.ExecuteUnclick();
-                }
-                if (Input.GetKey(key.Interact))
-                {
-                    interact.interact.ExecutePress();
+                    AnimationCreator.Interact();
+                    AnimationCreator.InteractEvent();
                 }
             }
         }
-        else
-        {
-            if (interact != null) interact.interact.ExecuteUnhover();
-            interactobject = null;
-            interact = null;
-        }
+
     }
     private void FixedUpdate()
         {

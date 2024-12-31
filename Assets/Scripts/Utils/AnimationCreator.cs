@@ -1,16 +1,98 @@
+using System.Runtime.CompilerServices;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Audio;
+using UnityEngine.Events;
+using UnityEngine.UIElements;
+
 
 public class AnimationCreator : MonoBehaviour
 {
-    public bool Reverse;
+    [SerializeField] public UnityEvent BasicEvent;
+    [SerializeField] public UnityEvent ReverseEvent;
+    [SerializeField] public UnityEvent BasicTriggerEvent;
+    [SerializeField] public UnityEvent ReverseTriggerEvent;
 
+    public bool Reverse;
+    public bool EnableSound;
     public bool Playing;
+    public bool Interactive;
+    public bool EnableEvent;
+    public bool EnableTrigger;
+    public bool Toggle;
+    public bool ToggleEvent;
+    public bool ToggleTrigger;
     public bool Looping;
     public bool LoopingReverse;
     private Quaternion StartRotation;
     private Quaternion RealEndRotation;
+    public bool isactivate = false;
+    public bool isactivatetrigger = false;
+    public string Tag;
+    public void InteractEvent()
+    {
+        if (EnableEvent)
+        {
+            if (ToggleEvent)
+            {
+                if (isactivate)
+                {
+                    ExecuteClick();
+                }
+                else
+                {
+                    ExecuteReverseClick();
+                }
+                isactivate = !isactivate;
+            }
+            else
+            {
+                ExecuteClick();
+            }
+        }
+    }
+    public void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == Tag)
+        {
+            if (EnableTrigger)
+            {
+                if (ToggleTrigger)
+                {
+                    if (isactivate)
+                    {
+                        ExecuteTriggerClick();
+                    }
+                    else
+                    {
+                        ExecuteTriggerReverseClick();
+                    }
+                    isactivatetrigger = !isactivatetrigger;
+                }
+                else
+                {
+                    ExecuteTriggerClick();
+                }
+            }
+        }
 
+    }
+    public virtual void ExecuteClick()
+    {
+        UnityAPI.ExecuteUnityEvent(BasicEvent);
+    }
+    public virtual void ExecuteReverseClick()
+    {
+        UnityAPI.ExecuteUnityEvent(ReverseEvent);
+    }
+    public virtual void ExecuteTriggerClick()
+    {
+        UnityAPI.ExecuteUnityEvent(BasicTriggerEvent);
+    }
+    public virtual void ExecuteTriggerReverseClick()
+    {
+        UnityAPI.ExecuteUnityEvent(ReverseTriggerEvent);
+    }
 
     private Vector3 StartSize;
     private Vector3 RealEndSize;
@@ -22,6 +104,8 @@ public class AnimationCreator : MonoBehaviour
     public Vector3 EndSize;
     public Vector3 EndPosition;
 
+    public GameObject Obj;
+    bool playsound;
     public bool Smooth;
     public float RotationSpeed;
     public float SmoothRotationSpeed;
@@ -30,12 +114,18 @@ public class AnimationCreator : MonoBehaviour
     public float SmoothScaleSpeed;
     public float ScaleSpeed;
     public int selectedTab = 0; // Переменная для хранения выбранной вкладки
+    public int selectedTabMain = 0;
+
+    public AudioSource audiosource;
+    public AudioClip StartAudio;
+    public AudioClip EndAudio;
     void Start()
     {
-       
-        StartRotation = transform.rotation;
-        StartSize = transform.localScale;
-        StartPosition = transform.localPosition;
+        if (Obj == null) Obj = gameObject;
+        StartRotation = Obj.transform.rotation;
+        StartSize = Obj.transform.localScale;
+        StartPosition = Obj.transform.localPosition;
+        
     }
 
 
@@ -56,14 +146,49 @@ public class AnimationCreator : MonoBehaviour
         LoopingReverse = ID;
     }
 
+    public void Interact()
+    {
+        Playing = true;
 
+        if (Interactive)
+        {
+            if (Toggle) Reverse = !Reverse;
+            else
+            {
+                if (!Reverse)
+                {
+                    Obj.transform.rotation = StartRotation;
+                }
+                else
+                {
+                    Obj.transform.rotation = RealEndRotation;
+                }
+                StartRotation = Obj.transform.rotation;
+                StartSize = Obj.transform.localScale;
+                StartPosition = Obj.transform.localPosition;
+            }
+            playsound = false;
+        }
+
+    }
     void Update()
     {
-
+        
 
 
         if (Playing)
         {
+            if (EnableSound)
+            {
+                if (!playsound)
+                {
+                    if (!Reverse) audiosource.PlayOneShot(StartAudio);
+                    else audiosource.PlayOneShot(EndAudio);
+                }
+                playsound = true;
+            }
+
+
             RealEndRotation = StartRotation;
             RealEndRotation *= Quaternion.Euler(EndRotation.x, EndRotation.y, EndRotation.z);
             RealEndSize = EndSize + StartSize;
@@ -71,26 +196,26 @@ public class AnimationCreator : MonoBehaviour
 
             if (!Reverse)
             {
-                if (Smooth) transform.rotation = Quaternion.Slerp(transform.rotation, RealEndRotation, SmoothRotationSpeed * Time.deltaTime);
-                else transform.rotation = Quaternion.RotateTowards(transform.rotation, RealEndRotation, RotationSpeed * Time.deltaTime);
+                if (Smooth) Obj.transform.rotation = Quaternion.Slerp(Obj.transform.rotation, RealEndRotation, SmoothRotationSpeed * Time.deltaTime);
+                else Obj.transform.rotation = Quaternion.RotateTowards(Obj.transform.rotation, RealEndRotation, RotationSpeed * Time.deltaTime);
 
-                if (Smooth) transform.localPosition = Vector3.Lerp(transform.localPosition, RealEndPosition, SmoothPositionSpeed * Time.deltaTime);
-                else transform.localPosition = Vector3.MoveTowards(transform.localPosition, RealEndPosition, PositionSpeed * Time.deltaTime);
-                if (Smooth) transform.localScale = Vector3.Lerp(transform.localScale, RealEndSize, SmoothScaleSpeed * Time.deltaTime);
-                else transform.localScale = Vector3.MoveTowards(transform.localScale, RealEndSize, ScaleSpeed * Time.deltaTime);
+                if (Smooth) Obj.transform.localPosition = Vector3.Lerp(Obj.transform.localPosition, RealEndPosition, SmoothPositionSpeed * Time.deltaTime);
+                else Obj.transform.localPosition = Vector3.MoveTowards(Obj.transform.localPosition, RealEndPosition, PositionSpeed * Time.deltaTime);
+                if (Smooth) Obj.transform.localScale = Vector3.Lerp(Obj.transform.localScale, RealEndSize, SmoothScaleSpeed * Time.deltaTime);
+                else Obj.transform.localScale = Vector3.MoveTowards(Obj.transform.localScale, RealEndSize, ScaleSpeed * Time.deltaTime);
 
 
             }
             else
             {
-                if (Smooth) transform.rotation = Quaternion.Slerp(transform.rotation, StartRotation, SmoothRotationSpeed * Time.deltaTime);
-                else transform.rotation = Quaternion.RotateTowards(transform.rotation, StartRotation, RotationSpeed * Time.deltaTime);
+                if (Smooth) Obj.transform.rotation = Quaternion.Slerp(Obj.transform.rotation, StartRotation, SmoothRotationSpeed * Time.deltaTime);
+                else Obj.transform.rotation = Quaternion.RotateTowards(Obj.transform.rotation, StartRotation, RotationSpeed * Time.deltaTime);
 
-                if (Smooth) transform.localPosition = Vector3.Lerp(transform.localPosition, StartPosition, SmoothPositionSpeed * Time.deltaTime);
-                else transform.localPosition = Vector3.MoveTowards(transform.localPosition, StartPosition, PositionSpeed * Time.deltaTime);
+                if (Smooth) Obj.transform.localPosition = Vector3.Lerp(Obj.transform.localPosition, StartPosition, SmoothPositionSpeed * Time.deltaTime);
+                else Obj.transform.localPosition = Vector3.MoveTowards(Obj.transform.localPosition, StartPosition, PositionSpeed * Time.deltaTime);
 
-                if (Smooth) transform.localScale = Vector3.Lerp(transform.localScale, StartSize, SmoothScaleSpeed * Time.deltaTime);
-                else transform.localScale = Vector3.MoveTowards(transform.localScale, StartSize, ScaleSpeed * Time.deltaTime);
+                if (Smooth) Obj.transform.localScale = Vector3.Lerp(Obj.transform.localScale, StartSize, SmoothScaleSpeed * Time.deltaTime);
+                else Obj.transform.localScale = Vector3.MoveTowards(Obj.transform.localScale, StartSize, ScaleSpeed * Time.deltaTime);
             }
 
             if (Looping)
@@ -99,14 +224,14 @@ public class AnimationCreator : MonoBehaviour
                 {
                     if (!Reverse)
                     {
-                        if (transform.rotation == RealEndRotation)
+                        if (Obj.transform.rotation == RealEndRotation)
                         {
                             Reverse = true;
                         }
                     }
                     else
                     {
-                        if (transform.rotation == StartRotation)
+                        if (Obj.transform.rotation == StartRotation)
                         {
                             Reverse = false;
                         }
@@ -116,16 +241,16 @@ public class AnimationCreator : MonoBehaviour
                 {
                     if (!Reverse)
                     {
-                        if (transform.rotation == RealEndRotation)
+                        if (Obj.transform.rotation == RealEndRotation)
                         {
-                            transform.rotation = StartRotation;
+                            Obj.transform.rotation = StartRotation;
                         }
                     }
                     else
                     {
-                        if (transform.rotation == StartRotation)
+                        if (Obj.transform.rotation == StartRotation)
                         {
-                            transform.rotation = RealEndRotation;
+                            Obj.transform.rotation = RealEndRotation;
                         }
                     }
                 }
@@ -148,51 +273,192 @@ public class CustomScriptEditor : Editor
 
         // Сохраняем старую вкладку
         int newTab = customScript.selectedTab;
+        int newTabMain = customScript.selectedTabMain;
 
         // Создаем кнопки для переключения вкладок
+        GUILayout.BeginVertical();
+
+
         GUILayout.BeginHorizontal();
-        if (GUILayout.Button("Настройки Анимации"))
+        if (GUILayout.Button("Анимации"))
         {
-            customScript.selectedTab = 0;
+            customScript.selectedTabMain = 0;
         }
-        if (GUILayout.Button("Поворот"))
+        if (GUILayout.Button("Интерактив"))
         {
-            customScript.selectedTab = 1;
+            customScript.selectedTabMain = 1;
         }
-        if (GUILayout.Button("Перемещение"))
+        if (GUILayout.Button("Триггеры"))
         {
-            customScript.selectedTab = 2;
-        }
-        if (GUILayout.Button("Размер"))
-        {
-            customScript.selectedTab = 3;
+            customScript.selectedTabMain = 2;
         }
         GUILayout.EndHorizontal();
 
-
-        switch (customScript.selectedTab)
+        GUILayout.BeginHorizontal();
+        if (customScript.selectedTabMain == 0)
         {
-            case 0:
-                ShowTab1(customScript);
-                break;
-            case 1:
-                ShowTab2(customScript);
-                break;
-            case 2:
-                ShowTab3(customScript);
-                break;
-            case 3:
-                ShowTab4(customScript);
-                break;
+            GUILayout.BeginVertical(GUILayout.MaxWidth(200));
+            if (GUILayout.Button("Настройки"))
+            {
+                customScript.selectedTab = 0;
+            }
+            if (GUILayout.Button("Поворот"))
+            {
+                customScript.selectedTab = 1;
+            }
+            if (GUILayout.Button("Перемещение"))
+            {
+                customScript.selectedTab = 2;
+            }
+            if (GUILayout.Button("Размер"))
+            {
+                customScript.selectedTab = 3;
+            }
+            if (GUILayout.Button("Звук"))
+            {
+                customScript.selectedTab = 4;
+            }
+            if (GUILayout.Button("Взаимодействие"))
+            {
+                customScript.selectedTab = 5;
+            }
+            GUILayout.EndVertical();
+            GUILayout.BeginVertical();
+
+            switch (customScript.selectedTab)
+            {
+                case 0:
+                    ShowTab1(customScript);
+                    break;
+                case 1:
+                    ShowTab2(customScript);
+                    break;
+                case 2:
+                    ShowTab3(customScript);
+                    break;
+                case 3:
+                    ShowTab4(customScript);
+                    break;
+                case 4:
+                    ShowTab5(customScript);
+                    break;
+                case 5:
+                    ShowTab6(customScript);
+                    break;
+            }
+            GUILayout.EndVertical();
         }
 
+        if (customScript.selectedTabMain == 1) 
+        {
+            GUILayout.BeginVertical(GUILayout.MaxWidth(200));
+            if (GUILayout.Button("Настройки"))
+            {
+                customScript.selectedTab = 0;
+            }
+            if (GUILayout.Button("Ивенты"))
+            {
+                customScript.selectedTab = 1;
+            }
+            GUILayout.EndVertical();
+
+            GUILayout.BeginVertical();
+
+            switch (customScript.selectedTab)
+            {
+                case 0:
+                    ShowInteractTab1(customScript);
+                    break;
+                case 1:
+                    ShowInteractTab2(customScript);
+                    break;
+            }
+            GUILayout.EndVertical();
+        }
+        if (customScript.selectedTabMain == 2)
+        {
+            GUILayout.BeginVertical(GUILayout.MaxWidth(200));
+            if (GUILayout.Button("Настройки"))
+            {
+                customScript.selectedTab = 0;
+            }
+            if (GUILayout.Button("Ивенты"))
+            {
+                customScript.selectedTab = 1;
+            }
+            GUILayout.EndVertical();
+
+            GUILayout.BeginVertical();
+
+            switch (customScript.selectedTab)
+            {
+                case 0:
+                    ShowTriggerTab1(customScript);
+                    break;
+                case 1:
+                    ShowTriggerTab2(customScript);
+                    break;
+            }
+            GUILayout.EndVertical();
+        }
+        GUILayout.EndHorizontal();
+        GUILayout.EndVertical();
         // Применяем изменения, если что-то было изменено
         if (GUI.changed)
         {
             EditorUtility.SetDirty(customScript);
         }
+
+    }
+    SerializedProperty onClickEventProperty;
+    SerializedProperty onClickEventProperty2;
+    SerializedProperty onClickEventProperty3;
+    SerializedProperty onClickEventProperty4;
+    private void OnEnable()
+    {
+        // Получаем ссылку на UnityEvent
+        onClickEventProperty = serializedObject.FindProperty("BasicEvent");
+        onClickEventProperty2 = serializedObject.FindProperty("ReverseEvent");
+        onClickEventProperty3 = serializedObject.FindProperty("BasicTriggerEvent");
+        onClickEventProperty4 = serializedObject.FindProperty("ReverseTriggerEvent");
     }
 
+    private void ShowInteractTab1(AnimationCreator customScript)
+    {
+        customScript.EnableEvent = EditorGUILayout.Toggle("Enable", customScript.EnableEvent);
+        customScript.ToggleEvent = EditorGUILayout.Toggle("Toggle", customScript.ToggleEvent);
+        
+    }
+    private void ShowInteractTab2(AnimationCreator customScript)
+    {
+        serializedObject.Update();
+
+        EditorGUILayout.PropertyField(onClickEventProperty, new GUIContent("Basic Event"));
+
+        EditorGUILayout.PropertyField(onClickEventProperty2, new GUIContent("Reverse Event"));
+
+        serializedObject.ApplyModifiedProperties();
+
+
+    }
+    private void ShowTriggerTab1(AnimationCreator customScript)
+    {
+        customScript.EnableTrigger = EditorGUILayout.Toggle("Enable", customScript.EnableTrigger);
+        customScript.ToggleTrigger = EditorGUILayout.Toggle("Toggle", customScript.ToggleTrigger);
+        customScript.Tag = EditorGUILayout.TagField("Tag", customScript.Tag);
+    }
+    private void ShowTriggerTab2(AnimationCreator customScript)
+    {
+        serializedObject.Update();
+
+        EditorGUILayout.PropertyField(onClickEventProperty3, new GUIContent("Basic Event"));
+
+        EditorGUILayout.PropertyField(onClickEventProperty4, new GUIContent("Reverse Event"));
+
+        serializedObject.ApplyModifiedProperties();
+
+         
+    }
     // Функции для отображения содержимого вкладок
     private void ShowTab1(AnimationCreator customScript)
     {
@@ -201,6 +467,7 @@ public class CustomScriptEditor : Editor
         customScript.Looping = EditorGUILayout.Toggle("Loop", customScript.Looping);
         customScript.LoopingReverse = EditorGUILayout.Toggle("Loop Reverse", customScript.LoopingReverse);
         customScript.Smooth = EditorGUILayout.Toggle("Smooth", customScript.Smooth);
+        customScript.Obj = (GameObject)EditorGUILayout.ObjectField("Обьект для Анимации", customScript.Obj, typeof(GameObject), true);
     }
 
     private void ShowTab2(AnimationCreator customScript)
@@ -221,5 +488,29 @@ public class CustomScriptEditor : Editor
         customScript.EndSize = EditorGUILayout.Vector3Field("Size", customScript.EndSize);
         customScript.SmoothScaleSpeed = EditorGUILayout.FloatField("Smooth Speed", customScript.SmoothScaleSpeed);
         customScript.ScaleSpeed = EditorGUILayout.FloatField("Speed", customScript.ScaleSpeed);
+    }
+    private void ShowTab5(AnimationCreator customScript)
+    {
+        customScript.EnableSound = EditorGUILayout.Toggle("Enable Audio", customScript.EnableSound);
+        customScript.audiosource = (AudioSource)EditorGUILayout.ObjectField("Проигрыватель", customScript.audiosource, typeof(AudioSource));
+        customScript.StartAudio = (AudioClip)EditorGUILayout.ObjectField("Звук Открытия", customScript.StartAudio, typeof(AudioClip), false);
+        customScript.EndAudio = (AudioClip)EditorGUILayout.ObjectField("Звук Закрытия", customScript.EndAudio, typeof(AudioClip), false);
+    }
+    private void ShowTab6(AnimationCreator customScript)
+    {
+        customScript.Interactive = EditorGUILayout.Toggle("Interactive", customScript.Interactive);
+        customScript.Toggle = EditorGUILayout.Toggle("Toggle", customScript.Toggle);
+        
+    }
+}
+internal static class UnityAPI
+{
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void ExecuteUnityEvent(this UnityEvent unityEvent)
+    {
+        if (unityEvent != null)
+        {
+            unityEvent.Invoke();
+        }
     }
 }
