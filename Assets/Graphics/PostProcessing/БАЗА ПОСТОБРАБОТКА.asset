@@ -1645,6 +1645,9 @@ MonoBehaviour:
   cullingDistance:
     m_OverrideState: 1
     m_Value: 1000
+  minSolidAngle:
+    m_OverrideState: 0
+    m_Value: 4
 --- !u!114 &8597762178197899212
 MonoBehaviour:
   m_ObjectHideFlags: 3
