@@ -7,13 +7,16 @@ using UnityEngine.InputSystem;
 
     public class SurfCharacter : MonoBehaviour
     {
+        
         public static Inventory Inventory;
         [Header("Interact")]
         public LayerMask layerMask;
         public float rayDistance = 100f;
         public static KeyManager key;
         GameObject interactobject;
+
         [Header("Camera Settings")]
+        public float BasicHeight = 2.1f;
         public float mouseSensitivity = 150f;
         public float maxLookAngle = 90f;
         public float cameraSmoothSpeed = 5f;
@@ -35,7 +38,15 @@ using UnityEngine.InputSystem;
         public float groundCheckDistance = 0.2f;
         public float airControlFactor = 0.5f;
 
-        [Header("Head Bobbing")]
+    [Header("Crouch Settings")]
+    public float CrouchHeight = 2.1f;
+    public float speedCrouchHeightRate = 10f;
+    public float CrouchSpeed = 5f;
+    public float CrouchFOV = 75f;
+    public float CrouchBobSpeed = 10f;
+    public float CrouchBobAmount = 0.05f;
+
+    [Header("Head Bobbing")]
         public float walkBobSpeed = 10f;
         public float walkBobAmount = 0.05f;
         public float sprintBobSpeed = 15f;
@@ -54,9 +65,10 @@ using UnityEngine.InputSystem;
 
         private bool isGrounded;
         private bool isJumping;
-
+    public CapsuleCollider cc;
         private void Awake()
         {
+        cc = GetComponent<CapsuleCollider>();
         Inventory = GetComponent<Inventory>();
         key = GetComponent<KeyManager>();
             rb = GetComponent<Rigidbody>();
@@ -68,12 +80,16 @@ using UnityEngine.InputSystem;
 
         private void Update()
         {
-            HandleMouseLook();
+         isSprinting = Input.GetKey(key.Run);
+         isCrouch = Input.GetKey(key.Crouch);
+
+        HandleMouseLook();
             HandleMovementInput();
             HandleJumpInput();
             HandleFOVAndTilt();
             HandleHeadBobbing();
             Interact();
+        Crouch();
 
         }
     void Interact()
@@ -119,20 +135,47 @@ using UnityEngine.InputSystem;
             float moveZ = Input.GetAxis("Vertical");
 
             bool isSprinting = Input.GetKey(key.Run);
+            bool isCrouch = Input.GetKey(key.Crouch);
             float targetSpeed = isSprinting ? sprintSpeed : walkSpeed;
+            if (isCrouch)
+            {
+                targetSpeed = CrouchSpeed;
+            }
+            else if (isCrouch && isSprinting)
+            {
+                targetSpeed = sprintSpeed / 2;
+            }
             currentSpeed = Mathf.Lerp(currentSpeed, targetSpeed, Time.deltaTime * speedTransitionRate);
 
             moveDirection = (transform.right * moveX + transform.forward * moveZ).normalized * currentSpeed;
         }
+        private void Crouch()
+        {
+        if (isCrouch)
+        {
+
+            cc.height = Mathf.Lerp(cc.height, CrouchHeight, Time.deltaTime * speedCrouchHeightRate);
+        }
+        else
+        {
+            cc.height = Mathf.Lerp(cc.height, BasicHeight, Time.deltaTime * speedCrouchHeightRate);
+        }
+    }
 
         private void HandleJumpInput()
         {
-            isGrounded = Physics.Raycast(transform.position, Vector3.down, groundCheckDistance, groundLayer);
 
-            if (Input.GetKeyDown(key.Jump) && isGrounded)
+        isGrounded = Physics.Raycast(jumptransform.position, Vector3.down, groundCheckDistance, groundLayer);
+
+            if (Input.GetKey(key.Jump) && isGrounded)
             {
+            float jumpforce2 = jumpForce;
+            if (isCrouch)
+            {
+                jumpforce2 = jumpforce2 / 2;
+            }
                 rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
-                rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+                rb.AddForce(Vector3.up * jumpforce2, ForceMode.Impulse);
                 isJumping = true;
             }
         }
@@ -155,18 +198,46 @@ using UnityEngine.InputSystem;
         private void HandleFOVAndTilt()
         {
             float targetFOV = Input.GetKey(key.Run) ? sprintFOV : defaultFOV;
-            playerCamera.fieldOfView = Mathf.Lerp(playerCamera.fieldOfView, targetFOV, Time.deltaTime * fovTransitionSpeed);
+            if (isCrouch)
+            {
+                targetFOV = CrouchFOV;
+            }
+            else if (isCrouch && isSprinting)
+            {
+            targetFOV = defaultFOV;
+            }
+        playerCamera.fieldOfView = Mathf.Lerp(playerCamera.fieldOfView, targetFOV, Time.deltaTime * fovTransitionSpeed);
         }
-
-        private void HandleHeadBobbing()
+        public float bobSpeed = 0;
+        public float bobAmount = 0;
+    bool isSprinting;
+      bool isCrouch;
+    public Transform jumptransform;
+    private void HandleHeadBobbing()
         {
             if (IsPlayerMoving() && isGrounded)
             {
-                bool isSprinting = Input.GetKey(KeyCode.LeftShift);
-                float bobSpeed = isSprinting ? sprintBobSpeed : walkBobSpeed;
-                float bobAmount = isSprinting ? sprintBobAmount : walkBobAmount;
-
-                headBobTimer += Time.deltaTime * bobSpeed;
+                if (isSprinting)
+                {
+                    bobSpeed = sprintBobSpeed;
+                    bobAmount = sprintBobAmount;
+                }
+                else
+                {
+                    bobSpeed = walkBobSpeed;
+                    bobAmount = walkBobAmount;
+                }
+                if (isCrouch)
+                {
+                    bobSpeed = CrouchBobSpeed;
+                    bobAmount = CrouchBobAmount;
+                }
+                else if (isCrouch && isSprinting)
+                {   
+                bobSpeed = CrouchBobSpeed*2;
+                bobAmount = CrouchBobAmount * 2;
+            }
+            headBobTimer += Time.deltaTime * bobSpeed;
                 float newY = defaultYPosition + Mathf.Sin(headBobTimer) * bobAmount;
                 playerCamera.transform.localPosition = new Vector3(playerCamera.transform.localPosition.x, newY, playerCamera.transform.localPosition.z);
             }
