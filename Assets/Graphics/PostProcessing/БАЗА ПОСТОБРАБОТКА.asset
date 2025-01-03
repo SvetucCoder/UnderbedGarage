@@ -165,10 +165,10 @@ MonoBehaviour:
     m_Value: 1
   planetRadius:
     m_OverrideState: 0
-    m_Value: 6378.1
+    m_Value: 6333.7
   renderingSpace:
     m_OverrideState: 0
-    m_Value: 1
+    m_Value: 0
   centerMode:
     m_OverrideState: 0
     m_Value: 0
@@ -1218,7 +1218,7 @@ MonoBehaviour:
   active: 1
   enable:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0
   triangleSize:
     m_OverrideState: 1
     m_Value: 30
