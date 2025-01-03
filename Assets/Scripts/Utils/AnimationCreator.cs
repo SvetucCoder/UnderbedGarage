@@ -4,62 +4,228 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Events;
 using UnityEngine.UIElements;
+using static UnityEngine.Rendering.DebugUI;
 
+[System.Flags]
+public enum Direction
+{
+    None = 0,       // Рекомендуется добавить значение "None" для пустого состояния
+    Forward = 1 << 0, // 1
+    Backward = 1 << 1, // 2
+    Left = 1 << 2,     // 4
+    Right = 1 << 3,    // 8
+    Up = 1 << 4,       // 16
+    Down = 1 << 5      // 32
+}
 
 public class AnimationCreator : MonoBehaviour
 {
+
     [SerializeField] public UnityEvent BasicEvent;
     [SerializeField] public UnityEvent ReverseEvent;
     [SerializeField] public UnityEvent BasicTriggerEvent;
     [SerializeField] public UnityEvent ReverseTriggerEvent;
 
-    public bool Reverse;
-    public bool EnableSound;
+    //Play
     public bool Playing;
-    public bool Interactive;
-    public bool EnableEvent;
-    public bool EnableTrigger;
+    public bool Reverse;
+    public bool Smooth;
+
+    //Interactive
     public bool Toggle;
-    public bool ToggleEvent;
-    public bool ToggleTrigger;
-    public bool Looping;
-    public bool LoopingReverse;
-    private Quaternion StartRotation;
-    private Quaternion RealEndRotation;
-    public bool isactivate = false;
-    public bool isactivatetrigger = false;
+    public bool Interactive;
+    public bool EnableSound;
+
+    //Trigger
+    public bool EnableTrigger;
     public string Tag;
-    public void InteractEvent()
+
+    //Animation
+    public Transform AnimationObject;
+
+    public Vector3 AnimationRotation;
+    private Vector3 AnimationRotationUsed;
+    public float RotationSpeed;
+
+    public Vector3 AnimationMove;
+    private Vector3 AnimationMoveUsed;
+    public float MoveSpeed;
+    public bool GlobalMove = true;
+
+    public Vector3 AnimationScale;
+    private Vector3 AnimationScaleUsed;
+    public float ScaleSpeed;
+    //Audio
+    public AudioSource AudioPlayer;
+    public AudioClip BasicAudio;
+    public AudioClip ReverseAudio;
+
+    //Rigidbody
+    public Rigidbody RigidbodyObject;
+    public bool ToggleGravity;
+    public bool BasicGravity;
+    public float Mass;
+    public float Force;
+    public Direction BasicDirection;
+    public Direction ReverseDirection;
+    public Vector3 direction;
+
+    public int selectedTab = 0;
+    public int selectedTabMain = 0;
+
+    void Start()
     {
-        if (EnableEvent)
+        if (AnimationObject == null) AnimationObject = gameObject.transform;
+    }
+    
+
+    public void ChangeDirection(Direction direct)
+    {
+        if(direct == Direction.Forward)
         {
-            if (ToggleEvent)
+            direction = Vector3.forward;
+        }
+        else if (direct == Direction.Backward)
+        {
+            direction = Vector3.back;
+        }
+        else if (direct == Direction.Left)
+        {
+            direction = Vector3.left;
+        }
+        else if (direct == Direction.Right)
+        {
+            direction = Vector3.right;
+        }
+        else if (direct == Direction.Up)
+        {
+            direction = Vector3.up;
+        }
+        else if (direct == Direction.Down)
+        {
+            direction = Vector3.down;
+        }
+    }
+    public void BasicPlay()
+    {
+        if (ToggleGravity)
+        {
+            RigidbodyObject.useGravity = BasicGravity;
+        }
+        ChangeDirection(BasicDirection);
+        ExecuteClick();
+        if (EnableSound) AudioPlayer.PlayOneShot(BasicAudio);
+        RigidbodyObject.AddForce(direction * Force, ForceMode.Impulse);
+
+    }
+    public void ReversePlay()
+    {
+        if (ToggleGravity)
+        {
+            RigidbodyObject.useGravity = !BasicGravity;
+        }
+        ChangeDirection(ReverseDirection);
+        ExecuteReverseClick();
+        if (EnableSound) AudioPlayer.PlayOneShot(ReverseAudio);
+        RigidbodyObject.AddForce(direction * Force, ForceMode.Impulse);
+    }
+    public void Interact()
+    {
+        if (Interactive)
+        {
+            if (!Playing) Playing = true;
+            else if (Toggle) Reverse = !Reverse;
+
+            AnimationRotationUsed = AnimationRotation - AnimationRotationUsed;
+            AnimationMoveUsed = AnimationMove - AnimationMoveUsed;
+            AnimationScaleUsed = AnimationScale - AnimationScaleUsed;
+            
+            if (!Reverse) BasicPlay();
+            else ReversePlay();
+
+        }
+    }
+    public void BasicAnimationMovement()
+    {
+        if (Smooth)
+        {
+            AnimationObject.rotation = Quaternion.Slerp(AnimationObject.rotation, AnimationObject.rotation * Quaternion.Euler(AnimationRotationUsed.x, AnimationRotationUsed.y, AnimationRotationUsed.z), RotationSpeed * Time.deltaTime);
+            AnimationObject.localScale = Vector3.Lerp(AnimationObject.localScale, AnimationObject.localScale + AnimationScaleUsed, ScaleSpeed * Time.deltaTime);
+            if (GlobalMove)
             {
-                if (isactivate)
-                {
-                    ExecuteClick();
-                }
-                else
-                {
-                    ExecuteReverseClick();
-                }
-                isactivate = !isactivate;
+                AnimationObject.position = Vector3.Lerp(AnimationObject.position, AnimationObject.position + AnimationMoveUsed, MoveSpeed * Time.deltaTime);
             }
             else
             {
-                ExecuteClick();
+                AnimationObject.localPosition = Vector3.Lerp(AnimationObject.localPosition, AnimationObject.localPosition + AnimationMoveUsed, MoveSpeed * Time.deltaTime);
             }
+            AnimationRotationUsed = Vector3.Lerp(AnimationRotationUsed, new Vector3(0, 0, 0), RotationSpeed * Time.deltaTime);
+            AnimationMoveUsed = Vector3.Lerp(AnimationMoveUsed, new Vector3(0, 0, 0), MoveSpeed * Time.deltaTime);
+            AnimationScaleUsed = Vector3.Lerp(AnimationScaleUsed, new Vector3(0, 0, 0), ScaleSpeed * Time.deltaTime);
+        }
+        else
+        {
+            AnimationObject.rotation = Quaternion.RotateTowards(AnimationObject.rotation, AnimationObject.rotation * Quaternion.Euler(AnimationRotationUsed.x, AnimationRotationUsed.y, AnimationRotationUsed.z), RotationSpeed * Time.deltaTime);
+            AnimationObject.localScale = Vector3.MoveTowards(AnimationObject.localScale, AnimationObject.localScale + AnimationScaleUsed, ScaleSpeed * Time.deltaTime);
+            if (GlobalMove)
+            {
+                AnimationObject.position = Vector3.MoveTowards(AnimationObject.position, AnimationObject.position + AnimationMoveUsed, MoveSpeed * Time.deltaTime);
+            }
+            else
+            {
+                AnimationObject.localPosition = Vector3.MoveTowards(AnimationObject.localPosition, AnimationObject.localPosition + AnimationMoveUsed, MoveSpeed * Time.deltaTime);
+            }
+            AnimationRotationUsed = Vector3.MoveTowards(AnimationRotationUsed, new Vector3(0, 0, 0), RotationSpeed * Time.deltaTime);
+            AnimationMoveUsed = Vector3.MoveTowards(AnimationMoveUsed, new Vector3(0, 0, 0), MoveSpeed * Time.deltaTime);
+            AnimationScaleUsed = Vector3.MoveTowards(AnimationScaleUsed, new Vector3(0, 0, 0), ScaleSpeed * Time.deltaTime);
+        }
+    }
+    public void ReverseAnimationMovement()
+    {
+        if (Smooth)
+        {
+            AnimationObject.rotation = Quaternion.Slerp(AnimationObject.rotation, AnimationObject.rotation * Quaternion.Euler(-AnimationRotationUsed.x, -AnimationRotationUsed.y, -AnimationRotationUsed.z), RotationSpeed * Time.deltaTime);
+            AnimationObject.localScale = Vector3.Lerp(AnimationObject.localScale, AnimationObject.localScale - AnimationScaleUsed, ScaleSpeed * Time.deltaTime);
+            if (GlobalMove)
+            {
+                AnimationObject.position = Vector3.Lerp(AnimationObject.position, AnimationObject.position - AnimationMoveUsed, MoveSpeed * Time.deltaTime);
+            }
+            else
+            {
+                AnimationObject.localPosition = Vector3.Lerp(AnimationObject.localPosition, AnimationObject.localPosition - AnimationMoveUsed, MoveSpeed * Time.deltaTime);
+            }
+
+            AnimationRotationUsed = Vector3.Lerp(AnimationRotationUsed, new Vector3(0, 0, 0), RotationSpeed * Time.deltaTime);
+            AnimationMoveUsed = Vector3.Lerp(AnimationMoveUsed, new Vector3(0, 0, 0), MoveSpeed * Time.deltaTime);
+            AnimationScaleUsed = Vector3.Lerp(AnimationScaleUsed, new Vector3(0, 0, 0), ScaleSpeed * Time.deltaTime);
+        }
+        else
+        {
+            AnimationObject.rotation = Quaternion.RotateTowards(AnimationObject.rotation, AnimationObject.rotation * Quaternion.Euler(-AnimationRotationUsed.x, -AnimationRotationUsed.y, -AnimationRotationUsed.z), RotationSpeed * Time.deltaTime);
+            AnimationObject.localScale = Vector3.MoveTowards(AnimationObject.localScale, AnimationObject.localScale - AnimationScaleUsed, ScaleSpeed * Time.deltaTime);
+            if (GlobalMove)
+            {
+                AnimationObject.position = Vector3.MoveTowards(AnimationObject.position, AnimationObject.position - AnimationMoveUsed, MoveSpeed * Time.deltaTime);
+            }
+            else
+            {
+                AnimationObject.localPosition = Vector3.MoveTowards(AnimationObject.localPosition, AnimationObject.localPosition - AnimationMoveUsed, MoveSpeed * Time.deltaTime);
+            }
+
+            AnimationRotationUsed = Vector3.MoveTowards(AnimationRotationUsed, new Vector3(0, 0, 0), RotationSpeed * Time.deltaTime);
+            AnimationMoveUsed = Vector3.MoveTowards(AnimationMoveUsed, new Vector3(0, 0, 0), MoveSpeed * Time.deltaTime);
+            AnimationScaleUsed = Vector3.MoveTowards(AnimationScaleUsed, new Vector3(0, 0, 0), ScaleSpeed * Time.deltaTime);
         }
     }
     public void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == Tag)
+        if (other.gameObject.tag == Tag)
         {
             if (EnableTrigger)
             {
-                if (ToggleTrigger)
+                if (Toggle)
                 {
-                    if (isactivate)
+                    if (Reverse)
                     {
                         ExecuteTriggerClick();
                     }
@@ -67,7 +233,7 @@ public class AnimationCreator : MonoBehaviour
                     {
                         ExecuteTriggerReverseClick();
                     }
-                    isactivatetrigger = !isactivatetrigger;
+                    Reverse = !Reverse;
                 }
                 else
                 {
@@ -75,8 +241,16 @@ public class AnimationCreator : MonoBehaviour
                 }
             }
         }
-
     }
+    void Update()
+    {
+        if (Playing)
+        {
+            if (!Reverse) BasicAnimationMovement();
+            else ReverseAnimationMovement();
+        }
+    }
+
     public virtual void ExecuteClick()
     {
         UnityAPI.ExecuteUnityEvent(BasicEvent);
@@ -93,171 +267,6 @@ public class AnimationCreator : MonoBehaviour
     {
         UnityAPI.ExecuteUnityEvent(ReverseTriggerEvent);
     }
-
-    private Vector3 StartSize;
-    private Vector3 RealEndSize;
-
-    private Vector3 StartPosition;
-    private Vector3 RealEndPosition;
-
-    public Vector3 EndRotation;
-    public Vector3 EndSize;
-    public Vector3 EndPosition;
-
-    public GameObject Obj;
-    bool playsound;
-    public bool Smooth;
-    public float RotationSpeed;
-    public float SmoothRotationSpeed;
-    public float SmoothPositionSpeed;
-    public float PositionSpeed;
-    public float SmoothScaleSpeed;
-    public float ScaleSpeed;
-    public int selectedTab = 0; // Переменная для хранения выбранной вкладки
-    public int selectedTabMain = 0;
-
-    public AudioSource audiosource;
-    public AudioClip StartAudio;
-    public AudioClip EndAudio;
-    void Start()
-    {
-        if (Obj == null) Obj = gameObject;
-        StartRotation = Obj.transform.rotation;
-        StartSize = Obj.transform.localScale;
-        StartPosition = Obj.transform.localPosition;
-        
-    }
-
-
-    public void Play(bool ID)
-    {
-        Playing = ID;
-    }
-    public void Reversed(bool ID)
-    {
-        Reverse = ID;
-    }
-    public void Loop(bool ID)
-    {
-        Looping = ID;
-    }
-    public void LoopReversed(bool ID)
-    {
-        LoopingReverse = ID;
-    }
-
-    public void Interact()
-    {
-        Playing = true;
-
-        if (Interactive)
-        {
-            if (Toggle) Reverse = !Reverse;
-            else
-            {
-                if (!Reverse)
-                {
-                    Obj.transform.rotation = StartRotation;
-                }
-                else
-                {
-                    Obj.transform.rotation = RealEndRotation;
-                }
-                StartRotation = Obj.transform.rotation;
-                StartSize = Obj.transform.localScale;
-                StartPosition = Obj.transform.localPosition;
-            }
-            playsound = false;
-        }
-
-    }
-    void Update()
-    {
-        
-
-
-        if (Playing)
-        {
-            if (EnableSound)
-            {
-                if (!playsound)
-                {
-                    if (!Reverse) audiosource.PlayOneShot(StartAudio);
-                    else audiosource.PlayOneShot(EndAudio);
-                }
-                playsound = true;
-            }
-
-
-            RealEndRotation = StartRotation;
-            RealEndRotation *= Quaternion.Euler(EndRotation.x, EndRotation.y, EndRotation.z);
-            RealEndSize = EndSize + StartSize;
-            RealEndPosition = EndPosition + StartPosition;
-
-            if (!Reverse)
-            {
-                if (Smooth) Obj.transform.rotation = Quaternion.Slerp(Obj.transform.rotation, RealEndRotation, SmoothRotationSpeed * Time.deltaTime);
-                else Obj.transform.rotation = Quaternion.RotateTowards(Obj.transform.rotation, RealEndRotation, RotationSpeed * Time.deltaTime);
-
-                if (Smooth) Obj.transform.localPosition = Vector3.Lerp(Obj.transform.localPosition, RealEndPosition, SmoothPositionSpeed * Time.deltaTime);
-                else Obj.transform.localPosition = Vector3.MoveTowards(Obj.transform.localPosition, RealEndPosition, PositionSpeed * Time.deltaTime);
-                if (Smooth) Obj.transform.localScale = Vector3.Lerp(Obj.transform.localScale, RealEndSize, SmoothScaleSpeed * Time.deltaTime);
-                else Obj.transform.localScale = Vector3.MoveTowards(Obj.transform.localScale, RealEndSize, ScaleSpeed * Time.deltaTime);
-
-
-            }
-            else
-            {
-                if (Smooth) Obj.transform.rotation = Quaternion.Slerp(Obj.transform.rotation, StartRotation, SmoothRotationSpeed * Time.deltaTime);
-                else Obj.transform.rotation = Quaternion.RotateTowards(Obj.transform.rotation, StartRotation, RotationSpeed * Time.deltaTime);
-
-                if (Smooth) Obj.transform.localPosition = Vector3.Lerp(Obj.transform.localPosition, StartPosition, SmoothPositionSpeed * Time.deltaTime);
-                else Obj.transform.localPosition = Vector3.MoveTowards(Obj.transform.localPosition, StartPosition, PositionSpeed * Time.deltaTime);
-
-                if (Smooth) Obj.transform.localScale = Vector3.Lerp(Obj.transform.localScale, StartSize, SmoothScaleSpeed * Time.deltaTime);
-                else Obj.transform.localScale = Vector3.MoveTowards(Obj.transform.localScale, StartSize, ScaleSpeed * Time.deltaTime);
-            }
-
-            if (Looping)
-            {
-                if (LoopingReverse)
-                {
-                    if (!Reverse)
-                    {
-                        if (Obj.transform.rotation == RealEndRotation)
-                        {
-                            Reverse = true;
-                        }
-                    }
-                    else
-                    {
-                        if (Obj.transform.rotation == StartRotation)
-                        {
-                            Reverse = false;
-                        }
-                    }
-                }
-                else
-                {
-                    if (!Reverse)
-                    {
-                        if (Obj.transform.rotation == RealEndRotation)
-                        {
-                            Obj.transform.rotation = StartRotation;
-                        }
-                    }
-                    else
-                    {
-                        if (Obj.transform.rotation == StartRotation)
-                        {
-                            Obj.transform.rotation = RealEndRotation;
-                        }
-                    }
-                }
-            }
-        }
-    }
-
 }
 
 [CustomEditor(typeof(AnimationCreator))] // Указываем, что редактор будет работать с CustomScript
@@ -280,15 +289,15 @@ public class CustomScriptEditor : Editor
 
 
         GUILayout.BeginHorizontal();
-        if (GUILayout.Button("Анимации"))
+        if (GUILayout.Button("Animation"))
         {
             customScript.selectedTabMain = 0;
         }
-        if (GUILayout.Button("Интерактив"))
+        if (GUILayout.Button("Interaction"))
         {
             customScript.selectedTabMain = 1;
         }
-        if (GUILayout.Button("Триггеры"))
+        if (GUILayout.Button("Trigger"))
         {
             customScript.selectedTabMain = 2;
         }
@@ -298,33 +307,25 @@ public class CustomScriptEditor : Editor
         if (customScript.selectedTabMain == 0)
         {
             GUILayout.BeginVertical(GUILayout.MaxWidth(200));
-            if (GUILayout.Button("Настройки"))
+            if (GUILayout.Button("Settings"))
             {
                 customScript.selectedTab = 0;
             }
-            if (GUILayout.Button("Поворот"))
+            if (GUILayout.Button("Transform Animation"))
             {
                 customScript.selectedTab = 1;
             }
-            if (GUILayout.Button("Перемещение"))
+            if (GUILayout.Button("Rigidbody Animation"))
             {
                 customScript.selectedTab = 2;
             }
-            if (GUILayout.Button("Размер"))
+            if (GUILayout.Button("Sound"))
             {
                 customScript.selectedTab = 3;
             }
-            if (GUILayout.Button("Звук"))
-            {
-                customScript.selectedTab = 4;
-            }
-            if (GUILayout.Button("Взаимодействие"))
-            {
-                customScript.selectedTab = 5;
-            }
             GUILayout.EndVertical();
             GUILayout.BeginVertical();
-
+             
             switch (customScript.selectedTab)
             {
                 case 0:
@@ -339,12 +340,6 @@ public class CustomScriptEditor : Editor
                 case 3:
                     ShowTab4(customScript);
                     break;
-                case 4:
-                    ShowTab5(customScript);
-                    break;
-                case 5:
-                    ShowTab6(customScript);
-                    break;
             }
             GUILayout.EndVertical();
         }
@@ -352,11 +347,11 @@ public class CustomScriptEditor : Editor
         if (customScript.selectedTabMain == 1) 
         {
             GUILayout.BeginVertical(GUILayout.MaxWidth(200));
-            if (GUILayout.Button("Настройки"))
+            if (GUILayout.Button("Settings"))
             {
                 customScript.selectedTab = 0;
             }
-            if (GUILayout.Button("Ивенты"))
+            if (GUILayout.Button("Events"))
             {
                 customScript.selectedTab = 1;
             }
@@ -378,11 +373,11 @@ public class CustomScriptEditor : Editor
         if (customScript.selectedTabMain == 2)
         {
             GUILayout.BeginVertical(GUILayout.MaxWidth(200));
-            if (GUILayout.Button("Настройки"))
+            if (GUILayout.Button("Settings"))
             {
                 customScript.selectedTab = 0;
             }
-            if (GUILayout.Button("Ивенты"))
+            if (GUILayout.Button("Events"))
             {
                 customScript.selectedTab = 1;
             }
@@ -403,7 +398,6 @@ public class CustomScriptEditor : Editor
         }
         GUILayout.EndHorizontal();
         GUILayout.EndVertical();
-        // Применяем изменения, если что-то было изменено
         if (GUI.changed)
         {
             EditorUtility.SetDirty(customScript);
@@ -425,8 +419,8 @@ public class CustomScriptEditor : Editor
 
     private void ShowInteractTab1(AnimationCreator customScript)
     {
-        customScript.EnableEvent = EditorGUILayout.Toggle("Enable", customScript.EnableEvent);
-        customScript.ToggleEvent = EditorGUILayout.Toggle("Toggle", customScript.ToggleEvent);
+        customScript.Interactive = EditorGUILayout.Toggle("Enable", customScript.Interactive);
+        customScript.Toggle = EditorGUILayout.Toggle("Toggle", customScript.Toggle);
         
     }
     private void ShowInteractTab2(AnimationCreator customScript)
@@ -444,7 +438,7 @@ public class CustomScriptEditor : Editor
     private void ShowTriggerTab1(AnimationCreator customScript)
     {
         customScript.EnableTrigger = EditorGUILayout.Toggle("Enable", customScript.EnableTrigger);
-        customScript.ToggleTrigger = EditorGUILayout.Toggle("Toggle", customScript.ToggleTrigger);
+        customScript.Toggle = EditorGUILayout.Toggle("Toggle", customScript.Toggle);
         customScript.Tag = EditorGUILayout.TagField("Tag", customScript.Tag);
     }
     private void ShowTriggerTab2(AnimationCreator customScript)
@@ -464,42 +458,46 @@ public class CustomScriptEditor : Editor
     {
         customScript.Playing = EditorGUILayout.Toggle("Play", customScript.Playing);
         customScript.Reverse = EditorGUILayout.Toggle("Reverse", customScript.Reverse);
-        customScript.Looping = EditorGUILayout.Toggle("Loop", customScript.Looping);
-        customScript.LoopingReverse = EditorGUILayout.Toggle("Loop Reverse", customScript.LoopingReverse);
         customScript.Smooth = EditorGUILayout.Toggle("Smooth", customScript.Smooth);
-        customScript.Obj = (GameObject)EditorGUILayout.ObjectField("Обьект для Анимации", customScript.Obj, typeof(GameObject), true);
+       
     }
 
     private void ShowTab2(AnimationCreator customScript)
     {
-        customScript.EndRotation = EditorGUILayout.Vector3Field("Rotation", customScript.EndRotation);
-        customScript.SmoothRotationSpeed = EditorGUILayout.FloatField("Smooth Speed", customScript.SmoothRotationSpeed);
-        customScript.RotationSpeed = EditorGUILayout.FloatField("Speed", customScript.RotationSpeed);
-    }
+        customScript.AnimationObject = (Transform)EditorGUILayout.ObjectField("Transform", customScript.AnimationObject, typeof(Transform), true);
+        customScript.AnimationMove = EditorGUILayout.Vector3Field("Move", customScript.AnimationMove);
+        customScript.MoveSpeed = EditorGUILayout.FloatField("Move Speed", customScript.MoveSpeed);
+        customScript.GlobalMove = EditorGUILayout.Toggle("Global Move", customScript.GlobalMove);
 
+        customScript.AnimationRotation = EditorGUILayout.Vector3Field("Rotation", customScript.AnimationRotation);
+        customScript.RotationSpeed = EditorGUILayout.FloatField("Rotation Speed", customScript.RotationSpeed);
+
+        customScript.AnimationScale = EditorGUILayout.Vector3Field("Scale", customScript.AnimationScale);
+        customScript.ScaleSpeed = EditorGUILayout.FloatField("Scale Speed", customScript.ScaleSpeed);
+
+    }
     private void ShowTab3(AnimationCreator customScript)
     {
-        customScript.EndPosition = EditorGUILayout.Vector3Field("Position", customScript.EndPosition);
-        customScript.SmoothPositionSpeed = EditorGUILayout.FloatField("Smooth Speed", customScript.SmoothPositionSpeed);
-        customScript.PositionSpeed = EditorGUILayout.FloatField("Speed", customScript.PositionSpeed);
+        customScript.RigidbodyObject = (Rigidbody)EditorGUILayout.ObjectField("Rigidbody", customScript.RigidbodyObject, typeof(Rigidbody), true);
+
+        customScript.ToggleGravity = EditorGUILayout.Toggle("Toggle Gravity", customScript.ToggleGravity);
+        customScript.BasicGravity = EditorGUILayout.Toggle("Gravity", customScript.BasicGravity);
+        customScript.Force = EditorGUILayout.FloatField("Force", customScript.Force);
+        customScript.BasicDirection = (Direction)EditorGUILayout.EnumPopup(
+            "Basic Direction",
+            customScript.BasicDirection
+        );
+        customScript.ReverseDirection = (Direction)EditorGUILayout.EnumPopup(
+                    "Reverse Direction",
+                    customScript.ReverseDirection
+                );
     }
     private void ShowTab4(AnimationCreator customScript)
     {
-        customScript.EndSize = EditorGUILayout.Vector3Field("Size", customScript.EndSize);
-        customScript.SmoothScaleSpeed = EditorGUILayout.FloatField("Smooth Speed", customScript.SmoothScaleSpeed);
-        customScript.ScaleSpeed = EditorGUILayout.FloatField("Speed", customScript.ScaleSpeed);
-    }
-    private void ShowTab5(AnimationCreator customScript)
-    {
         customScript.EnableSound = EditorGUILayout.Toggle("Enable Audio", customScript.EnableSound);
-        customScript.audiosource = (AudioSource)EditorGUILayout.ObjectField("Проигрыватель", customScript.audiosource, typeof(AudioSource));
-        customScript.StartAudio = (AudioClip)EditorGUILayout.ObjectField("Звук Открытия", customScript.StartAudio, typeof(AudioClip), false);
-        customScript.EndAudio = (AudioClip)EditorGUILayout.ObjectField("Звук Закрытия", customScript.EndAudio, typeof(AudioClip), false);
-    }
-    private void ShowTab6(AnimationCreator customScript)
-    {
-        customScript.Interactive = EditorGUILayout.Toggle("Interactive", customScript.Interactive);
-        customScript.Toggle = EditorGUILayout.Toggle("Toggle", customScript.Toggle);
+        customScript.AudioPlayer = (AudioSource)EditorGUILayout.ObjectField("Player", customScript.AudioPlayer, typeof(AudioSource),true);
+        customScript.BasicAudio = (AudioClip)EditorGUILayout.ObjectField("Basic Sound", customScript.BasicAudio, typeof(AudioClip), false);
+        customScript.ReverseAudio = (AudioClip)EditorGUILayout.ObjectField("Reverse Sound", customScript.ReverseAudio, typeof(AudioClip), false);
         
     }
 }

@@ -46,6 +46,15 @@ using UnityEngine.InputSystem;
     public float CrouchBobSpeed = 10f;
     public float CrouchBobAmount = 0.05f;
 
+    [Header("Lay Settings")]
+    public float LayHeight = 2.1f;
+    public float speedLayHeightRate = 10f;
+    public float LaySpeed = 5f;
+    public float LayFOV = 75f;
+    public float LayBobSpeed = 10f;
+    public float LayBobAmount = 0.05f;
+
+
     [Header("Head Bobbing")]
         public float walkBobSpeed = 10f;
         public float walkBobAmount = 0.05f;
@@ -66,32 +75,82 @@ using UnityEngine.InputSystem;
         private bool isGrounded;
         private bool isJumping;
     public CapsuleCollider cc;
-        private void Awake()
-        {
-        cc = GetComponent<CapsuleCollider>();
+    public CapsuleCollider cc2;
+
+
+    public Vector3 posjump;
+    public Vector3 poslayjump;
+    public Vector3 poscrouchjump;
+    public Transform currentposJump;
+
+    public float crouchrayDistance = 2f;
+    public float layrayDistance = 2f;
+    public Transform checkup;
+    public bool canjumpup = true;
+    private void Awake()
+    {
+
         Inventory = GetComponent<Inventory>();
         key = GetComponent<KeyManager>();
-            rb = GetComponent<Rigidbody>();
-            rb.freezeRotation = true;
-            playerCamera = GetComponentInChildren<Camera>();
-            defaultYPosition = playerCamera.transform.localPosition.y;
-            Cursor.lockState = CursorLockMode.Locked;
-        }
-
+        rb = GetComponent<Rigidbody>();
+        rb.freezeRotation = true;
+        playerCamera = GetComponentInChildren<Camera>();
+        defaultYPosition = playerCamera.transform.localPosition.y;
+        Cursor.lockState = CursorLockMode.Locked;
+        CamPos = playerCamera.transform.localPosition;
+        poslayjump = posjump;
+        poscrouchjump = posjump;
+        poscrouchjump.y += 0.5f;
+        poslayjump.y += 0.85f;
+        LayCamPos = playerCamera.transform.localPosition;
+        LayCamPos.y -= 0.75f;
+        LayCamPos.z += 0.75f;
+    }
+    public Renderer targetRenderer;
+    bool IsLay;
         private void Update()
         {
-         isSprinting = Input.GetKey(key.Run);
-         isCrouch = Input.GetKey(key.Crouch);
 
+            isSprinting = Input.GetKey(key.Run);
+        if (!isCrouch)
+        {
+            isCrouch = Input.GetKey(key.Crouch);
+        }
+        if (!IsLay)
+        {
+            IsLay = Input.GetKey(key.Lay);
+        }
+        if (!Physics.Raycast(checkup.transform.position, Vector3.up, crouchrayDistance, layerMask) && !Input.GetKey(key.Crouch))
+        {
+            isCrouch = false;
+            canjumpup = true;
+
+        }
+        if (Physics.Raycast(checkup.transform.position, Vector3.up, crouchrayDistance, layerMask) && isCrouch)
+        {
+            canjumpup = false;
+        }
+        else if(!Physics.Raycast(checkup.transform.position, Vector3.up, crouchrayDistance, layerMask) && isCrouch)
+        {
+            canjumpup = true;
+        }
+        if (!Physics.Raycast(checkup.transform.position, Vector3.up, layrayDistance, layerMask) && !Input.GetKey(key.Lay))
+        {
+            IsLay = false;
+        }
+        if (Physics.Raycast(checkup.transform.position, Vector3.up, layrayDistance, layerMask) && !Input.GetKey(key.Lay) && Input.GetKey(key.Crouch))
+        {
+            IsLay = false;
+        }
         HandleMouseLook();
             HandleMovementInput();
             HandleJumpInput();
             HandleFOVAndTilt();
-            HandleHeadBobbing();
+  
             Interact();
         Crouch();
 
-        }
+    }
     void Interact()
     {
         Vector3 mousePosition = Input.mousePosition;
@@ -107,17 +166,19 @@ using UnityEngine.InputSystem;
                 if (Input.GetKeyDown(key.Interact))
                 {
                     AnimationCreator.Interact();
-                    AnimationCreator.InteractEvent();
                 }
             }
         }
 
     }
+    public Vector3 CamPos;
+    public Vector3 LayCamPos;
     private void FixedUpdate()
         {
             ApplyMovement();
-            ApplyAirControl();
-        }
+
+
+    }
 
         private void HandleMouseLook()
         {
@@ -137,46 +198,75 @@ using UnityEngine.InputSystem;
             bool isSprinting = Input.GetKey(key.Run);
             bool isCrouch = Input.GetKey(key.Crouch);
             float targetSpeed = isSprinting ? sprintSpeed : walkSpeed;
-            if (isCrouch)
+            if (isCrouch && !isSprinting)
             {
                 targetSpeed = CrouchSpeed;
             }
             else if (isCrouch && isSprinting)
             {
-                targetSpeed = sprintSpeed / 2;
+                targetSpeed = CrouchSpeed * 2;
             }
-            currentSpeed = Mathf.Lerp(currentSpeed, targetSpeed, Time.deltaTime * speedTransitionRate);
+            if (IsLay && !isSprinting)
+            {
+                targetSpeed = LaySpeed;
+            }
+            else if (IsLay && isSprinting)
+            {
+                targetSpeed = LaySpeed * 2;
+            }
+
+        currentSpeed = Mathf.Lerp(currentSpeed, targetSpeed, Time.deltaTime * speedTransitionRate);
 
             moveDirection = (transform.right * moveX + transform.forward * moveZ).normalized * currentSpeed;
         }
         private void Crouch()
         {
-        if (isCrouch)
-        {
-
-            cc.height = Mathf.Lerp(cc.height, CrouchHeight, Time.deltaTime * speedCrouchHeightRate);
+            if (isCrouch)
+            {
+                if (!IsLay) currentposJump.localPosition = new Vector3(currentposJump.localPosition.x,Mathf.Lerp(currentposJump.localPosition.y, poscrouchjump.y, Time.deltaTime * speedCrouchHeightRate), currentposJump.localPosition.z);
+                if (!IsLay) cc.height = Mathf.Lerp(cc.height, CrouchHeight, Time.deltaTime * speedCrouchHeightRate);
+            }
+            else if(!isCrouch )
+            {
+            if (!IsLay) currentposJump.localPosition = new Vector3(currentposJump.localPosition.x, Mathf.Lerp(currentposJump.localPosition.y, posjump.y, Time.deltaTime * speedCrouchHeightRate), currentposJump.localPosition.z);
+            if (!IsLay) cc.height = Mathf.Lerp(cc.height, BasicHeight, Time.deltaTime * speedCrouchHeightRate);
+            }
+            if (IsLay)
+            {
+            currentposJump.localPosition = new Vector3(currentposJump.localPosition.x, Mathf.Lerp(currentposJump.localPosition.y, poslayjump.y, Time.deltaTime * speedCrouchHeightRate), currentposJump.localPosition.z);
+            cc.height = Mathf.Lerp(cc.height, 0, Time.deltaTime * speedLayHeightRate);
+                cc2.height = Mathf.Lerp(cc2.height, LayHeight, Time.deltaTime * speedLayHeightRate);
+                playerCamera.transform.localPosition = Vector3.Lerp(playerCamera.transform.localPosition, LayCamPos, Time.deltaTime * speedLayHeightRate);
+            }
+            else if (!IsLay)
+            {
+                if(!isCrouch) cc.height = Mathf.Lerp(cc.height, LayHeight, Time.deltaTime * speedLayHeightRate);
+                if (!isCrouch) currentposJump.localPosition = new Vector3(currentposJump.localPosition.x, Mathf.Lerp(currentposJump.localPosition.y, posjump.y, Time.deltaTime * speedCrouchHeightRate), currentposJump.localPosition.z);
+                cc2.height = Mathf.Lerp(cc2.height, 0, Time.deltaTime * speedLayHeightRate);
+                playerCamera.transform.localPosition = Vector3.Lerp(playerCamera.transform.localPosition, CamPos, Time.deltaTime * speedLayHeightRate);
+            }
         }
-        else
-        {
-            cc.height = Mathf.Lerp(cc.height, BasicHeight, Time.deltaTime * speedCrouchHeightRate);
-        }
-    }
 
         private void HandleJumpInput()
         {
 
-        isGrounded = Physics.Raycast(jumptransform.position, Vector3.down, groundCheckDistance, groundLayer);
+        isGrounded = Physics.Raycast(currentposJump.position, Vector3.down, groundCheckDistance, groundLayer);
 
-            if (Input.GetKey(key.Jump) && isGrounded)
+            if (Input.GetKey(key.Jump) && isGrounded && canjumpup)
             {
             float jumpforce2 = jumpForce;
             if (isCrouch)
             {
-                jumpforce2 = jumpforce2 / 2;
+                jumpforce2 = 150;
             }
-                rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
+            if (IsLay)
+            {
+                jumpforce2 = 0;
+            }
+            rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
                 rb.AddForce(Vector3.up * jumpforce2, ForceMode.Impulse);
                 isJumping = true;
+            isGrounded = false;
             }
         }
 
@@ -204,7 +294,15 @@ using UnityEngine.InputSystem;
             }
             else if (isCrouch && isSprinting)
             {
-            targetFOV = defaultFOV;
+                targetFOV = defaultFOV;
+            }
+            if (IsLay)
+            {
+                targetFOV = LayFOV;
+            }
+            else if (IsLay && isSprinting)
+            {
+                targetFOV = CrouchFOV;
             }
         playerCamera.fieldOfView = Mathf.Lerp(playerCamera.fieldOfView, targetFOV, Time.deltaTime * fovTransitionSpeed);
         }
