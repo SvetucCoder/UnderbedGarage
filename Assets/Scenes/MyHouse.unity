@@ -630,7 +630,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializedBakingSet: {fileID: 11400000, guid: c4bcdb5d6bfe2d645932f74754f597fc, type: 2}
-  sceneGUID: 77fe8aad23f0f08438fa16da995c97fd
+  sceneGUID: 13dcceac2c4342e469c9f22ad87a9427
   obsoleteAsset: {fileID: 0}
   obsoleteCellSharedDataAsset: {fileID: 0}
   obsoleteCellSupportDataAsset: {fileID: 0}
@@ -2116,36 +2116,40 @@ MonoBehaviour:
   ReverseTriggerEvent:
     m_PersistentCalls:
       m_Calls: []
-  Reverse: 1
-  EnableSound: 1
   Playing: 0
-  Interactive: 1
-  EnableEvent: 0
-  EnableTrigger: 0
-  Toggle: 1
-  ToggleEvent: 0
-  ToggleTrigger: 0
-  Looping: 0
-  LoopingReverse: 0
-  isactivate: 0
-  isactivatetrigger: 0
-  Tag: 
-  EndRotation: {x: 0, y: 0, z: 0}
-  EndSize: {x: 0, y: 0, z: 0}
-  EndPosition: {x: 0, y: 0, z: 0.426}
-  Obj: {fileID: 0}
+  Reverse: 1
   Smooth: 1
+  Toggle: 1
+  Interactive: 1
+  EnableSound: 1
+  EnableTrigger: 0
+  Tag: 
+  AnimationObject: {fileID: 0}
+  AnimationRotation: {x: 0, y: 0, z: 0}
   RotationSpeed: 0
-  SmoothRotationSpeed: 0
-  SmoothPositionSpeed: 5
-  PositionSpeed: 0
-  SmoothScaleSpeed: 0
+  AnimationMove: {x: 0, y: 0, z: 0}
+  MoveSpeed: 0
+  GlobalMove: 1
+  AnimationScale: {x: 0, y: 0, z: 0}
   ScaleSpeed: 0
+  AudioPlayer: {fileID: 0}
+  BasicAudio: {fileID: 0}
+  ReverseAudio: {fileID: 0}
+  RigidbodyObject: {fileID: 0}
+  ToggleGravity: 0
+  BasicGravity: 0
+  Mass: 0
+  Force: 0
+  BasicDirection: 0
+  ReverseDirection: 0
+  direction: {x: 0, y: 0, z: 0}
   selectedTab: 4
   selectedTabMain: 0
-  audiosource: {fileID: 1212017377}
-  StartAudio: {fileID: 8300000, guid: 987ee37451af4894ab25fa351744315c, type: 3}
-  EndAudio: {fileID: 8300000, guid: 97ec8fbbd2f43664db8902f1fb67a442, type: 3}
+  ChangeMaterial: 0
+  BaseMaterial: {fileID: 0}
+  ReverseMaterial: {fileID: 0}
+  MaterialID: 0
+  RenderObjects: []
 --- !u!65 &186491051
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9130,6 +9134,63 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -402458688035911274, guid: b56d2dd2014bd2449a5cc657dd78a6b7, type: 3}
+--- !u!1001 &427711279
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2174765964963680515, guid: be41ce6e137865e479d7d3ba1f847fe8, type: 3}
+      propertyPath: m_Name
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 6177134980401238320, guid: be41ce6e137865e479d7d3ba1f847fe8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6177134980401238320, guid: be41ce6e137865e479d7d3ba1f847fe8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6177134980401238320, guid: be41ce6e137865e479d7d3ba1f847fe8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6177134980401238320, guid: be41ce6e137865e479d7d3ba1f847fe8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6177134980401238320, guid: be41ce6e137865e479d7d3ba1f847fe8, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6177134980401238320, guid: be41ce6e137865e479d7d3ba1f847fe8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6177134980401238320, guid: be41ce6e137865e479d7d3ba1f847fe8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6177134980401238320, guid: be41ce6e137865e479d7d3ba1f847fe8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6177134980401238320, guid: be41ce6e137865e479d7d3ba1f847fe8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6177134980401238320, guid: be41ce6e137865e479d7d3ba1f847fe8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: be41ce6e137865e479d7d3ba1f847fe8, type: 3}
 --- !u!54 &437284679
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -9959,36 +10020,40 @@ MonoBehaviour:
   ReverseTriggerEvent:
     m_PersistentCalls:
       m_Calls: []
-  Reverse: 0
-  EnableSound: 1
   Playing: 0
-  Interactive: 1
-  EnableEvent: 0
-  EnableTrigger: 0
-  Toggle: 0
-  ToggleEvent: 0
-  ToggleTrigger: 0
-  Looping: 0
-  LoopingReverse: 0
-  isactivate: 0
-  isactivatetrigger: 0
-  Tag: 
-  EndRotation: {x: 0, y: 0, z: 0}
-  EndSize: {x: 0, y: 0, z: 0}
-  EndPosition: {x: 0, y: 0, z: 0}
-  Obj: {fileID: 0}
+  Reverse: 0
   Smooth: 0
+  Toggle: 0
+  Interactive: 1
+  EnableSound: 1
+  EnableTrigger: 0
+  Tag: 
+  AnimationObject: {fileID: 0}
+  AnimationRotation: {x: 0, y: 0, z: 0}
   RotationSpeed: 0
-  SmoothRotationSpeed: 0
-  SmoothPositionSpeed: 0
-  PositionSpeed: 0
-  SmoothScaleSpeed: 0
+  AnimationMove: {x: 0, y: 0, z: 0}
+  MoveSpeed: 0
+  GlobalMove: 1
+  AnimationScale: {x: 0, y: 0, z: 0}
   ScaleSpeed: 0
+  AudioPlayer: {fileID: 0}
+  BasicAudio: {fileID: 0}
+  ReverseAudio: {fileID: 0}
+  RigidbodyObject: {fileID: 0}
+  ToggleGravity: 0
+  BasicGravity: 0
+  Mass: 0
+  Force: 0
+  BasicDirection: 0
+  ReverseDirection: 0
+  direction: {x: 0, y: 0, z: 0}
   selectedTab: 5
   selectedTabMain: 0
-  audiosource: {fileID: 468407654}
-  StartAudio: {fileID: 8300000, guid: a25c02ad0db9a6f418144a87bcd6aff7, type: 3}
-  EndAudio: {fileID: 0}
+  ChangeMaterial: 0
+  BaseMaterial: {fileID: 0}
+  ReverseMaterial: {fileID: 0}
+  MaterialID: 0
+  RenderObjects: []
 --- !u!1 &507946910
 GameObject:
   m_ObjectHideFlags: 0
@@ -10521,6 +10586,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2055486740}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &557241015 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 3859970538496339434, guid: 3820d3e4b88ebb34691b1d44e3f8c74c, type: 3}
+  m_PrefabInstance: {fileID: 807338689}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &557676525
 GameObject:
   m_ObjectHideFlags: 0
@@ -11231,7 +11301,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 999308432}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
@@ -11243,7 +11313,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 226890611}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
@@ -11255,7 +11325,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 168528988}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
@@ -11267,7 +11337,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
   ReverseEvent:
     m_PersistentCalls:
@@ -11282,7 +11352,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 1
+          m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 999308432}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
@@ -11294,7 +11364,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 1
+          m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 226890611}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
@@ -11306,7 +11376,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 1
+          m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 168528988}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
@@ -11318,7 +11388,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 1
+          m_BoolArgument: 0
         m_CallState: 2
   BasicTriggerEvent:
     m_PersistentCalls:
@@ -11326,36 +11396,44 @@ MonoBehaviour:
   ReverseTriggerEvent:
     m_PersistentCalls:
       m_Calls: []
-  Reverse: 1
-  EnableSound: 1
-  Playing: 1
-  Interactive: 1
-  EnableEvent: 1
-  EnableTrigger: 0
-  Toggle: 1
-  ToggleEvent: 1
-  ToggleTrigger: 0
-  Looping: 0
-  LoopingReverse: 0
-  isactivate: 0
-  isactivatetrigger: 0
-  Tag: 
-  EndRotation: {x: -10, y: 0, z: 0}
-  EndSize: {x: 0, y: 0, z: 0}
-  EndPosition: {x: 0, y: 0, z: 0}
-  Obj: {fileID: 0}
+  Playing: 0
+  Reverse: 0
   Smooth: 1
-  RotationSpeed: 100
-  SmoothRotationSpeed: 5
-  SmoothPositionSpeed: 5
-  PositionSpeed: 100
-  SmoothScaleSpeed: 5
-  ScaleSpeed: 100
-  selectedTab: 1
-  selectedTabMain: 1
-  audiosource: {fileID: 1893539061}
-  StartAudio: {fileID: 8300000, guid: 9e197a3df58a72d4ba8b6a3df9db0d22, type: 3}
-  EndAudio: {fileID: 8300000, guid: 9e197a3df58a72d4ba8b6a3df9db0d22, type: 3}
+  Toggle: 1
+  Interactive: 1
+  EnableSound: 1
+  EnableTrigger: 0
+  Tag: 
+  AnimationObject: {fileID: 0}
+  AnimationRotation: {x: -10, y: 0, z: 0}
+  RotationSpeed: 5
+  AnimationMove: {x: 0, y: 0, z: 0}
+  MoveSpeed: 0
+  GlobalMove: 1
+  AnimationScale: {x: 0, y: 0, z: 0}
+  ScaleSpeed: 0
+  AudioPlayer: {fileID: 1893539061}
+  BasicAudio: {fileID: 8300000, guid: 9e197a3df58a72d4ba8b6a3df9db0d22, type: 3}
+  ReverseAudio: {fileID: 8300000, guid: 9e197a3df58a72d4ba8b6a3df9db0d22, type: 3}
+  RigidbodyObject: {fileID: 0}
+  ToggleGravity: 0
+  BasicGravity: 0
+  Mass: 0
+  Force: 0
+  BasicDirection: 0
+  ReverseDirection: 0
+  direction: {x: 0, y: 0, z: 0}
+  selectedTab: 4
+  selectedTabMain: 0
+  ChangeMaterial: 1
+  BaseMaterial: {fileID: 2100000, guid: b28de70282fcb024fb7462e9f0a09dc8, type: 2}
+  ReverseMaterial: {fileID: 2100000, guid: a83442ae26e3c314b985617bb39deda1, type: 2}
+  MaterialID: 2
+  RenderObjects:
+  - {fileID: 837669904}
+  - {fileID: 818764681}
+  - {fileID: 1055459905}
+  - {fileID: 557241015}
 --- !u!65 &604961049
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13432,6 +13510,11 @@ PrefabInstance:
       addedObject: {fileID: 168528989}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3820d3e4b88ebb34691b1d44e3f8c74c, type: 3}
+--- !u!23 &818764681 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 3859970538496339434, guid: 3820d3e4b88ebb34691b1d44e3f8c74c, type: 3}
+  m_PrefabInstance: {fileID: 1972407495}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &831644412
 GameObject:
   m_ObjectHideFlags: 0
@@ -13507,6 +13590,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 831644412}
   m_CullTransparentMesh: 1
+--- !u!23 &837669904 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 3859970538496339434, guid: 3820d3e4b88ebb34691b1d44e3f8c74c, type: 3}
+  m_PrefabInstance: {fileID: 1954523021}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &838467014 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9039331516380603343, guid: b56d2dd2014bd2449a5cc657dd78a6b7, type: 3}
@@ -16018,6 +16106,11 @@ Transform:
   - {fileID: 1768675739}
   m_Father: {fileID: 2024832591}
   m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
+--- !u!23 &1055459905 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 3859970538496339434, guid: 3820d3e4b88ebb34691b1d44e3f8c74c, type: 3}
+  m_PrefabInstance: {fileID: 1604070690}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1058659186
 GameObject:
   m_ObjectHideFlags: 0
@@ -16416,7 +16509,7 @@ MonoBehaviour:
   BasicTriggerEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8655584760939065868}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: RoomChanger, Assembly-CSharp
         m_MethodName: RoomChanged
         m_Mode: 6
@@ -16431,36 +16524,40 @@ MonoBehaviour:
   ReverseTriggerEvent:
     m_PersistentCalls:
       m_Calls: []
-  Reverse: 0
-  EnableSound: 0
   Playing: 0
-  Interactive: 0
-  EnableEvent: 0
-  EnableTrigger: 1
-  Toggle: 0
-  ToggleEvent: 0
-  ToggleTrigger: 0
-  Looping: 0
-  LoopingReverse: 0
-  isactivate: 0
-  isactivatetrigger: 0
-  Tag: Player
-  EndRotation: {x: 0, y: 0, z: 0}
-  EndSize: {x: 0, y: 0, z: 0}
-  EndPosition: {x: 0, y: 0, z: 0}
-  Obj: {fileID: 0}
+  Reverse: 0
   Smooth: 0
+  Toggle: 0
+  Interactive: 0
+  EnableSound: 0
+  EnableTrigger: 1
+  Tag: Player
+  AnimationObject: {fileID: 0}
+  AnimationRotation: {x: 0, y: 0, z: 0}
   RotationSpeed: 0
-  SmoothRotationSpeed: 0
-  SmoothPositionSpeed: 0
-  PositionSpeed: 0
-  SmoothScaleSpeed: 0
+  AnimationMove: {x: 0, y: 0, z: 0}
+  MoveSpeed: 0
+  GlobalMove: 1
+  AnimationScale: {x: 0, y: 0, z: 0}
   ScaleSpeed: 0
+  AudioPlayer: {fileID: 0}
+  BasicAudio: {fileID: 0}
+  ReverseAudio: {fileID: 0}
+  RigidbodyObject: {fileID: 0}
+  ToggleGravity: 0
+  BasicGravity: 0
+  Mass: 0
+  Force: 0
+  BasicDirection: 0
+  ReverseDirection: 0
+  direction: {x: 0, y: 0, z: 0}
   selectedTab: 1
   selectedTabMain: 2
-  audiosource: {fileID: 0}
-  StartAudio: {fileID: 0}
-  EndAudio: {fileID: 0}
+  ChangeMaterial: 0
+  BaseMaterial: {fileID: 0}
+  ReverseMaterial: {fileID: 0}
+  MaterialID: 0
+  RenderObjects: []
 --- !u!65 &1071340888
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17844,6 +17941,11 @@ PrefabInstance:
 --- !u!4 &1166081889 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ab40d4069364c004baa879ec177c3d79, type: 3}
+  m_PrefabInstance: {fileID: 1166081887}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &1166081890 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: ab40d4069364c004baa879ec177c3d79, type: 3}
   m_PrefabInstance: {fileID: 1166081887}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1166709318 stripped
@@ -20875,36 +20977,40 @@ MonoBehaviour:
   ReverseTriggerEvent:
     m_PersistentCalls:
       m_Calls: []
-  Reverse: 1
-  EnableSound: 1
   Playing: 0
-  Interactive: 1
-  EnableEvent: 0
-  EnableTrigger: 0
-  Toggle: 1
-  ToggleEvent: 0
-  ToggleTrigger: 0
-  Looping: 0
-  LoopingReverse: 0
-  isactivate: 0
-  isactivatetrigger: 0
-  Tag: 
-  EndRotation: {x: 0, y: 0, z: 0}
-  EndSize: {x: 0, y: 0, z: 0}
-  EndPosition: {x: 0, y: 0, z: 0.426}
-  Obj: {fileID: 0}
+  Reverse: 1
   Smooth: 1
+  Toggle: 1
+  Interactive: 1
+  EnableSound: 1
+  EnableTrigger: 0
+  Tag: 
+  AnimationObject: {fileID: 0}
+  AnimationRotation: {x: 0, y: 0, z: 0}
   RotationSpeed: 0
-  SmoothRotationSpeed: 0
-  SmoothPositionSpeed: 5
-  PositionSpeed: 0
-  SmoothScaleSpeed: 0
+  AnimationMove: {x: 0, y: 0, z: 0}
+  MoveSpeed: 0
+  GlobalMove: 1
+  AnimationScale: {x: 0, y: 0, z: 0}
   ScaleSpeed: 0
+  AudioPlayer: {fileID: 0}
+  BasicAudio: {fileID: 0}
+  ReverseAudio: {fileID: 0}
+  RigidbodyObject: {fileID: 0}
+  ToggleGravity: 0
+  BasicGravity: 0
+  Mass: 0
+  Force: 0
+  BasicDirection: 0
+  ReverseDirection: 0
+  direction: {x: 0, y: 0, z: 0}
   selectedTab: 4
   selectedTabMain: 0
-  audiosource: {fileID: 376969345}
-  StartAudio: {fileID: 8300000, guid: 987ee37451af4894ab25fa351744315c, type: 3}
-  EndAudio: {fileID: 8300000, guid: 97ec8fbbd2f43664db8902f1fb67a442, type: 3}
+  ChangeMaterial: 0
+  BaseMaterial: {fileID: 0}
+  ReverseMaterial: {fileID: 0}
+  MaterialID: 0
+  RenderObjects: []
 --- !u!65 &1476895218
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -27175,36 +27281,40 @@ MonoBehaviour:
   ReverseTriggerEvent:
     m_PersistentCalls:
       m_Calls: []
-  Reverse: 0
-  EnableSound: 1
   Playing: 1
-  Interactive: 1
-  EnableEvent: 1
-  EnableTrigger: 0
-  Toggle: 1
-  ToggleEvent: 1
-  ToggleTrigger: 0
-  Looping: 0
-  LoopingReverse: 0
-  isactivate: 0
-  isactivatetrigger: 0
-  Tag: 
-  EndRotation: {x: 0, y: 0, z: 0}
-  EndSize: {x: 0, y: 0, z: 0}
-  EndPosition: {x: 0, y: 0, z: 0}
-  Obj: {fileID: 0}
+  Reverse: 0
   Smooth: 0
+  Toggle: 1
+  Interactive: 1
+  EnableSound: 1
+  EnableTrigger: 0
+  Tag: 
+  AnimationObject: {fileID: 0}
+  AnimationRotation: {x: 0, y: 0, z: 0}
   RotationSpeed: 0
-  SmoothRotationSpeed: 0
-  SmoothPositionSpeed: 0
-  PositionSpeed: 0
-  SmoothScaleSpeed: 0
+  AnimationMove: {x: 0, y: 0, z: 0}
+  MoveSpeed: 0
+  GlobalMove: 1
+  AnimationScale: {x: 0, y: 0, z: 0}
   ScaleSpeed: 0
+  AudioPlayer: {fileID: 0}
+  BasicAudio: {fileID: 0}
+  ReverseAudio: {fileID: 0}
+  RigidbodyObject: {fileID: 0}
+  ToggleGravity: 0
+  BasicGravity: 0
+  Mass: 0
+  Force: 0
+  BasicDirection: 0
+  ReverseDirection: 0
+  direction: {x: 0, y: 0, z: 0}
   selectedTab: 4
   selectedTabMain: 0
-  audiosource: {fileID: 247730366}
-  StartAudio: {fileID: 8300000, guid: 9e197a3df58a72d4ba8b6a3df9db0d22, type: 3}
-  EndAudio: {fileID: 8300000, guid: 32a15b676d66b5d48b105dc62a35ba8f, type: 3}
+  ChangeMaterial: 0
+  BaseMaterial: {fileID: 0}
+  ReverseMaterial: {fileID: 0}
+  MaterialID: 0
+  RenderObjects: []
 --- !u!65 &1719695306
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -27642,7 +27752,6 @@ GameObject:
   - component: {fileID: 1754673861}
   - component: {fileID: 1754673864}
   - component: {fileID: 1754673863}
-  - component: {fileID: 1754673865}
   - component: {fileID: 1754673867}
   - component: {fileID: 1754673866}
   m_Layer: 0
@@ -27721,60 +27830,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1754673860}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1754673865
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1754673860}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81912115060ba0a4cbd8f0b82a519122, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  BasicEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  ReverseEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  BasicTriggerEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  ReverseTriggerEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  Reverse: 0
-  EnableSound: 0
-  Playing: 0
-  Interactive: 0
-  EnableEvent: 0
-  EnableTrigger: 0
-  Toggle: 0
-  ToggleEvent: 0
-  ToggleTrigger: 0
-  Looping: 0
-  LoopingReverse: 0
-  isactivate: 0
-  isactivatetrigger: 0
-  Tag: 
-  EndRotation: {x: 0, y: 0, z: 90}
-  EndSize: {x: 0, y: 0, z: 0}
-  EndPosition: {x: 0, y: 0, z: 0}
-  Obj: {fileID: 0}
-  Smooth: 1
-  RotationSpeed: 1000
-  SmoothRotationSpeed: 5
-  SmoothPositionSpeed: 0
-  PositionSpeed: 0
-  SmoothScaleSpeed: 0
-  ScaleSpeed: 0
-  selectedTab: 0
-  selectedTabMain: 1
-  audiosource: {fileID: 0}
-  StartAudio: {fileID: 0}
-  EndAudio: {fileID: 0}
 --- !u!59 &1754673866
 HingeJoint:
   m_ObjectHideFlags: 0
@@ -30124,7 +30179,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
   ReverseEvent:
     m_PersistentCalls:
@@ -30139,7 +30194,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 1
+          m_BoolArgument: 0
         m_CallState: 2
   BasicTriggerEvent:
     m_PersistentCalls:
@@ -30147,36 +30202,41 @@ MonoBehaviour:
   ReverseTriggerEvent:
     m_PersistentCalls:
       m_Calls: []
-  Reverse: 1
-  EnableSound: 1
-  Playing: 1
-  Interactive: 1
-  EnableEvent: 1
-  EnableTrigger: 0
-  Toggle: 1
-  ToggleEvent: 1
-  ToggleTrigger: 0
-  Looping: 0
-  LoopingReverse: 0
-  isactivate: 0
-  isactivatetrigger: 0
-  Tag: 
-  EndRotation: {x: -10, y: 0, z: 0}
-  EndSize: {x: 0, y: 0, z: 0}
-  EndPosition: {x: 0, y: 0, z: 0}
-  Obj: {fileID: 0}
+  Playing: 0
+  Reverse: 0
   Smooth: 1
-  RotationSpeed: 100
-  SmoothRotationSpeed: 5
-  SmoothPositionSpeed: 5
-  PositionSpeed: 100
-  SmoothScaleSpeed: 5
+  Toggle: 1
+  Interactive: 1
+  EnableSound: 1
+  EnableTrigger: 0
+  Tag: 
+  AnimationObject: {fileID: 0}
+  AnimationRotation: {x: -10, y: 0, z: 0}
+  RotationSpeed: 5
+  AnimationMove: {x: 0, y: 0, z: 0}
+  MoveSpeed: 0
+  GlobalMove: 1
+  AnimationScale: {x: 0, y: 0, z: 0}
   ScaleSpeed: 100
-  selectedTab: 1
-  selectedTabMain: 1
-  audiosource: {fileID: 1381320791}
-  StartAudio: {fileID: 8300000, guid: 9e197a3df58a72d4ba8b6a3df9db0d22, type: 3}
-  EndAudio: {fileID: 8300000, guid: 9e197a3df58a72d4ba8b6a3df9db0d22, type: 3}
+  AudioPlayer: {fileID: 1381320791}
+  BasicAudio: {fileID: 8300000, guid: 9e197a3df58a72d4ba8b6a3df9db0d22, type: 3}
+  ReverseAudio: {fileID: 8300000, guid: 9e197a3df58a72d4ba8b6a3df9db0d22, type: 3}
+  RigidbodyObject: {fileID: 0}
+  ToggleGravity: 0
+  BasicGravity: 0
+  Mass: 0
+  Force: 0
+  BasicDirection: 0
+  ReverseDirection: 0
+  direction: {x: 0, y: 0, z: 0}
+  selectedTab: 3
+  selectedTabMain: 0
+  ChangeMaterial: 1
+  BaseMaterial: {fileID: 2100000, guid: 1162f4ff9eb90e64d8854837a29b1224, type: 2}
+  ReverseMaterial: {fileID: 2100000, guid: afe7c6c86f8c23440befba017c0680ed, type: 2}
+  MaterialID: 0
+  RenderObjects:
+  - {fileID: 1166081890}
 --- !u!65 &1768675741
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -34280,36 +34340,40 @@ MonoBehaviour:
   ReverseTriggerEvent:
     m_PersistentCalls:
       m_Calls: []
-  Reverse: 0
-  EnableSound: 1
   Playing: 0
-  Interactive: 1
-  EnableEvent: 0
-  EnableTrigger: 0
-  Toggle: 0
-  ToggleEvent: 0
-  ToggleTrigger: 0
-  Looping: 0
-  LoopingReverse: 0
-  isactivate: 0
-  isactivatetrigger: 0
-  Tag: 
-  EndRotation: {x: 0, y: 0, z: 0}
-  EndSize: {x: 0, y: 0, z: 0}
-  EndPosition: {x: 0, y: 0, z: 0}
-  Obj: {fileID: 0}
+  Reverse: 0
   Smooth: 0
+  Toggle: 0
+  Interactive: 1
+  EnableSound: 1
+  EnableTrigger: 0
+  Tag: 
+  AnimationObject: {fileID: 0}
+  AnimationRotation: {x: 0, y: 0, z: 0}
   RotationSpeed: 0
-  SmoothRotationSpeed: 0
-  SmoothPositionSpeed: 0
-  PositionSpeed: 0
-  SmoothScaleSpeed: 0
+  AnimationMove: {x: 0, y: 0, z: 0}
+  MoveSpeed: 0
+  GlobalMove: 1
+  AnimationScale: {x: 0, y: 0, z: 0}
   ScaleSpeed: 0
+  AudioPlayer: {fileID: 0}
+  BasicAudio: {fileID: 0}
+  ReverseAudio: {fileID: 0}
+  RigidbodyObject: {fileID: 0}
+  ToggleGravity: 0
+  BasicGravity: 0
+  Mass: 0
+  Force: 0
+  BasicDirection: 0
+  ReverseDirection: 0
+  direction: {x: 0, y: 0, z: 0}
   selectedTab: 4
   selectedTabMain: 0
-  audiosource: {fileID: 551060070}
-  StartAudio: {fileID: 8300000, guid: a25c02ad0db9a6f418144a87bcd6aff7, type: 3}
-  EndAudio: {fileID: 0}
+  ChangeMaterial: 0
+  BaseMaterial: {fileID: 0}
+  ReverseMaterial: {fileID: 0}
+  MaterialID: 0
+  RenderObjects: []
 --- !u!1 &2063758932
 GameObject:
   m_ObjectHideFlags: 0
@@ -35581,51 +35645,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2355555032784322876}
   m_Mesh: {fileID: -7893858375565801000, guid: 99332ab463d15374191c36b8701eb0b8, type: 3}
---- !u!23 &360111983772284224
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 909615020958647054}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 593b5f9e4bbc08746b3a4181a7b520db, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!4 &379733861313735452
 Transform:
   m_ObjectHideFlags: 0
@@ -35855,21 +35874,6 @@ Transform:
   - {fileID: 8506644194121932464}
   m_Father: {fileID: 169965063}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!4 &543450652531673822
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 919132148075237476}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0.50004756, y: 0.49995092, z: -0.4999525, w: 0.5000491}
-  m_LocalPosition: {x: 0.829, y: -0.58299994, z: 1.1820002}
-  m_LocalScale: {x: 10, y: 10, z: 10}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 5467285085067786060}
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: -89.989}
 --- !u!4 &543450652799220820
 Transform:
   m_ObjectHideFlags: 0
@@ -35942,24 +35946,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 543450651650571944}
   m_LocalEulerAnglesHint: {x: 0.006, y: -11.221, z: 0.011}
---- !u!1 &909615020958647054
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7317171570309736960}
-  - component: {fileID: 5151559548387858442}
-  - component: {fileID: 360111983772284224}
-  m_Layer: 0
-  m_Name: model
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
 --- !u!1 &919132147541328402
 GameObject:
   m_ObjectHideFlags: 0
@@ -36046,24 +36032,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &919132148075237476
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 543450652531673822}
-  - component: {fileID: 3469287838662903163}
-  - component: {fileID: 1711813854599918001}
-  m_Layer: 0
-  m_Name: SM_Key
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
 --- !u!1 &919132148434519899
 GameObject:
   m_ObjectHideFlags: 0
@@ -36327,51 +36295,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 543450653137916640}
   m_LocalEulerAnglesHint: {x: 0, y: 89.999, z: 0}
---- !u!23 &1711813854599918001
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 919132148075237476}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 8f1a37a672717e747ac55ced2ed8e89a, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1714938217702793550
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -36524,145 +36447,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 543450652799220820}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2192785642661312036
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5467285085067786059}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23c1ce4fb46143f46bc5cb5224c934f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  clearColorMode: 0
-  backgroundColorHDR: {r: 0.025, g: 0.07, b: 0.19, a: 0}
-  clearDepth: 1
-  volumeLayerMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  volumeAnchorOverride: {fileID: 0}
-  antialiasing: 2
-  SMAAQuality: 2
-  dithering: 1
-  stopNaNs: 0
-  taaSharpenStrength: 0.5
-  TAAQuality: 2
-  taaSharpenMode: 2
-  taaRingingReduction: 0
-  taaHistorySharpening: 0.251
-  taaAntiFlicker: 0.5
-  taaMotionVectorRejection: 0
-  taaAntiHistoryRinging: 0
-  taaBaseBlendFactor: 0.875
-  taaJitterScale: 1
-  physicalParameters:
-    m_Iso: 200
-    m_ShutterSpeed: 0.005
-    m_Aperture: 16
-    m_FocusDistance: 10
-    m_BladeCount: 5
-    m_Curvature: {x: 2, y: 11}
-    m_BarrelClipping: 0.25
-    m_Anamorphism: 0
-  flipYMode: 0
-  xrRendering: 1
-  fullscreenPassthrough: 0
-  allowDynamicResolution: 1
-  customRenderingSettings: 0
-  invertFaceCulling: 0
-  probeLayerMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  hasPersistentHistory: 0
-  screenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
-  screenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
-  allowDeepLearningSuperSampling: 1
-  deepLearningSuperSamplingUseCustomQualitySettings: 0
-  deepLearningSuperSamplingQuality: 0
-  deepLearningSuperSamplingUseCustomAttributes: 0
-  deepLearningSuperSamplingUseOptimalSettings: 1
-  deepLearningSuperSamplingSharpening: 0
-  allowFidelityFX2SuperResolution: 1
-  fidelityFX2SuperResolutionUseCustomQualitySettings: 0
-  fidelityFX2SuperResolutionQuality: 0
-  fidelityFX2SuperResolutionUseCustomAttributes: 0
-  fidelityFX2SuperResolutionUseOptimalSettings: 1
-  fidelityFX2SuperResolutionEnableSharpening: 0
-  fidelityFX2SuperResolutionSharpening: 0
-  fsrOverrideSharpness: 0
-  fsrSharpness: 0.92
-  exposureTarget: {fileID: 0}
-  materialMipBias: 0
-  m_RenderingPathCustomFrameSettings:
-    bitDatas:
-      data1: 5770166122053453
-      data2: 12934340311651418136
-    lodBias: 1
-    lodBiasMode: 0
-    lodBiasQualityLevel: 0
-    maximumLODLevel: 0
-    maximumLODLevelMode: 0
-    maximumLODLevelQualityLevel: 0
-    sssQualityMode: 0
-    sssQualityLevel: 0
-    sssCustomSampleBudget: 20
-    sssCustomDownsampleSteps: 0
-    msaaMode: 1
-    materialQuality: 0
-  renderingPathCustomFrameSettingsOverrideMask:
-    mask:
-      data1: 0
-      data2: 0
-  defaultFrameSettings: 0
-  m_Version: 9
-  m_ObsoleteRenderingPath: 0
-  m_ObsoleteFrameSettings:
-    overrides: 0
-    enableShadow: 0
-    enableContactShadows: 0
-    enableShadowMask: 0
-    enableSSR: 0
-    enableSSAO: 0
-    enableSubsurfaceScattering: 0
-    enableTransmission: 0
-    enableAtmosphericScattering: 0
-    enableVolumetrics: 0
-    enableReprojectionForVolumetrics: 0
-    enableLightLayers: 0
-    enableExposureControl: 1
-    diffuseGlobalDimmer: 0
-    specularGlobalDimmer: 0
-    shaderLitMode: 0
-    enableDepthPrepassWithDeferredRendering: 0
-    enableTransparentPrepass: 0
-    enableMotionVectors: 0
-    enableObjectMotionVectors: 0
-    enableDecals: 0
-    enableRoughRefraction: 0
-    enableTransparentPostpass: 0
-    enableDistortion: 0
-    enablePostprocess: 0
-    enableOpaqueObjects: 0
-    enableTransparentObjects: 0
-    enableRealtimePlanarReflection: 0
-    enableMSAA: 0
-    enableAsyncCompute: 0
-    runLightListAsync: 0
-    runSSRAsync: 0
-    runSSAOAsync: 0
-    runContactShadowsAsync: 0
-    runVolumeVoxelizationAsync: 0
-    lightLoopSettings:
-      overrides: 0
-      enableDeferredTileAndCluster: 0
-      enableComputeLightEvaluation: 0
-      enableComputeLightVariants: 0
-      enableComputeMaterialVariants: 0
-      enableFptlForForwardOpaque: 0
-      enableBigTilePrepass: 0
-      isFptlEnabled: 0
 --- !u!33 &2196944528650815537
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -37227,14 +37011,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!33 &3469287838662903163
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 919132148075237476}
-  m_Mesh: {fileID: -5546940888850326318, guid: 45322688c4c207144b98e37dbeef219e, type: 3}
 --- !u!23 &3488324424617841874
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -37768,33 +37544,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!54 &4243712635778029859
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5467285085310021288}
-  serializedVersion: 4
-  m_Mass: 30
-  m_Drag: 1
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 112
-  m_CollisionDetection: 0
 --- !u!33 &4290180932595810194
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -38171,14 +37920,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &5151559548387858442
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 909615020958647054}
-  m_Mesh: {fileID: -5495902117074765545, guid: d35685932e96d9f4f85ceb52143823f3, type: 3}
 --- !u!1 &5180293361459205893
 GameObject:
   m_ObjectHideFlags: 0
@@ -38347,181 +38088,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4718324492978082256}
   m_Mesh: {fileID: 2113829593597416178, guid: 703ae8b563713cc4faf3a77545624f16, type: 3}
---- !u!1 &5467285085067786059
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5467285085067786060}
-  - component: {fileID: 5467285085067786062}
-  - component: {fileID: 5467285085067786061}
-  - component: {fileID: 6134365445321307286}
-  - component: {fileID: 2192785642661312036}
-  m_Layer: 0
-  m_Name: Camera
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5467285085067786060
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5467285085067786059}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 543450652531673822}
-  - {fileID: 7317171570309736960}
-  m_Father: {fileID: 5467285085310021289}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!81 &5467285085067786061
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5467285085067786059}
-  m_Enabled: 1
---- !u!20 &5467285085067786062
-Camera:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5467285085067786059}
-  m_Enabled: 1
-  serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
-  m_projectionMatrixMode: 1
-  m_GateFitMode: 2
-  m_FOVAxisMode: 0
-  m_Iso: 200
-  m_ShutterSpeed: 0.005
-  m_Aperture: 16
-  m_FocusDistance: 10
-  m_FocalLength: 20.78461
-  m_BladeCount: 5
-  m_Curvature: {x: 2, y: 11}
-  m_BarrelClipping: 0.25
-  m_Anamorphism: 0
-  m_SensorSize: {x: 36, y: 24}
-  m_LensShift: {x: 0, y: 0}
-  m_NormalizedViewPortRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
-  near clip plane: 0.01
-  far clip plane: 1000
-  field of view: 60.000004
-  orthographic: 0
-  orthographic size: 5
-  m_Depth: 0
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 119
-  m_RenderingPath: -1
-  m_TargetTexture: {fileID: 0}
-  m_TargetDisplay: 0
-  m_TargetEye: 3
-  m_HDR: 0
-  m_AllowMSAA: 0
-  m_AllowDynamicResolution: 1
-  m_ForceIntoRT: 0
-  m_OcclusionCulling: 1
-  m_StereoConvergence: 10
-  m_StereoSeparation: 0.022
---- !u!1 &5467285085310021288
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5467285085310021289}
-  - component: {fileID: 8655584760939065867}
-  - component: {fileID: 5467285085310021290}
-  - component: {fileID: 8655584760939065866}
-  - component: {fileID: 4243712635778029859}
-  - component: {fileID: 5747599109415868399}
-  - component: {fileID: 8655584760939065868}
-  m_Layer: 8
-  m_Name: "\u0418\u0433\u0440\u043E\u043A"
-  m_TagString: Player
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5467285085310021289
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5467285085310021288}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.868, y: 1.65, z: 4.55}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 5467285085067786060}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5467285085310021290
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5467285085310021288}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 601d4686cc0b70d45a98271d52094850, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  rayDistance: 3
-  mouseSensitivity: 100
-  maxLookAngle: 90
-  cameraSmoothSpeed: 5
-  defaultFOV: 60
-  sprintFOV: 75
-  fovTransitionSpeed: 5
-  tiltAngle: 10
-  tiltSpeed: 5
-  walkSpeed: 5
-  sprintSpeed: 10
-  speedTransitionRate: 10
-  smoothAcceleration: 10
-  jumpForce: 200
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  groundCheckDistance: 1.2
-  airControlFactor: 0.5
-  walkBobSpeed: 10
-  walkBobAmount: 0.05
-  sprintBobSpeed: 15
-  sprintBobAmount: 0.1
-  smoothReturnSpeed: 5
-  jumpCameraOffset: 0.2
-  fallCameraOffset: 0.4
 --- !u!33 &5478400250636864888
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -38590,29 +38156,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1754673861}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &5747599109415868399
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5467285085310021288}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.2
-  m_Height: 2.1
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5759159346157529741
 GameObject:
   m_ObjectHideFlags: 0
@@ -38822,50 +38365,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &6134365445321307286
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5467285085067786059}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_RenderShadows: 1
-  m_RequiresDepthTextureOption: 2
-  m_RequiresOpaqueTextureOption: 2
-  m_CameraType: 0
-  m_Cameras: []
-  m_RendererIndex: -1
-  m_VolumeLayerMask:
-    serializedVersion: 2
-    m_Bits: 1
-  m_VolumeTrigger: {fileID: 0}
-  m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 1
-  m_Antialiasing: 0
-  m_AntialiasingQuality: 2
-  m_StopNaN: 0
-  m_Dithering: 0
-  m_ClearDepth: 1
-  m_AllowXRRendering: 1
-  m_AllowHDROutput: 1
-  m_UseScreenCoordOverride: 0
-  m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
-  m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
-  m_RequiresDepthTexture: 0
-  m_RequiresColorTexture: 0
-  m_Version: 2
-  m_TaaSettings:
-    m_Quality: 3
-    m_FrameInfluence: 0.1
-    m_JitterScale: 1
-    m_MipBias: 0
-    m_VarianceClampScale: 0.9
-    m_ContrastAdaptiveSharpening: 0
 --- !u!1 &6145962400977201081
 GameObject:
   m_ObjectHideFlags: 0
@@ -39556,36 +39055,40 @@ MonoBehaviour:
   ReverseTriggerEvent:
     m_PersistentCalls:
       m_Calls: []
-  Reverse: 1
-  EnableSound: 0
   Playing: 0
-  Interactive: 1
-  EnableEvent: 0
-  EnableTrigger: 0
-  Toggle: 1
-  ToggleEvent: 0
-  ToggleTrigger: 0
-  Looping: 0
-  LoopingReverse: 0
-  isactivate: 0
-  isactivatetrigger: 0
-  Tag: 
-  EndRotation: {x: 0, y: -90, z: 0}
-  EndSize: {x: 0, y: 0, z: 0}
-  EndPosition: {x: 0, y: 0, z: 0}
-  Obj: {fileID: 1198626966}
+  Reverse: 1
   Smooth: 1
+  Toggle: 1
+  Interactive: 1
+  EnableSound: 0
+  EnableTrigger: 0
+  Tag: 
+  AnimationObject: {fileID: 0}
+  AnimationRotation: {x: 0, y: 0, z: 0}
   RotationSpeed: 0
-  SmoothRotationSpeed: 5
-  SmoothPositionSpeed: 0
-  PositionSpeed: 0
-  SmoothScaleSpeed: 0
+  AnimationMove: {x: 0, y: 0, z: 0}
+  MoveSpeed: 0
+  GlobalMove: 1
+  AnimationScale: {x: 0, y: 0, z: 0}
   ScaleSpeed: 0
+  AudioPlayer: {fileID: 0}
+  BasicAudio: {fileID: 0}
+  ReverseAudio: {fileID: 0}
+  RigidbodyObject: {fileID: 0}
+  ToggleGravity: 0
+  BasicGravity: 0
+  Mass: 0
+  Force: 0
+  BasicDirection: 0
+  ReverseDirection: 0
+  direction: {x: 0, y: 0, z: 0}
   selectedTab: 0
   selectedTabMain: 1
-  audiosource: {fileID: 0}
-  StartAudio: {fileID: 0}
-  EndAudio: {fileID: 0}
+  ChangeMaterial: 0
+  BaseMaterial: {fileID: 0}
+  ReverseMaterial: {fileID: 0}
+  MaterialID: 0
+  RenderObjects: []
 --- !u!33 &6891025788451324276
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -39725,21 +39228,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 389447825217744277}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &7317171570309736960
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 909615020958647054}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0.7071068, y: 0.7071068, z: -0, w: 0}
-  m_LocalPosition: {x: 0.86599994, y: -0.79499984, z: 1.2680001}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 5467285085067786060}
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 90}
 --- !u!1 &7328042341035526129
 GameObject:
   m_ObjectHideFlags: 0
@@ -39876,36 +39364,40 @@ MonoBehaviour:
   ReverseTriggerEvent:
     m_PersistentCalls:
       m_Calls: []
-  Reverse: 1
-  EnableSound: 0
   Playing: 0
-  Interactive: 1
-  EnableEvent: 0
-  EnableTrigger: 0
-  Toggle: 1
-  ToggleEvent: 0
-  ToggleTrigger: 0
-  Looping: 0
-  LoopingReverse: 0
-  isactivate: 0
-  isactivatetrigger: 0
-  Tag: 
-  EndRotation: {x: 0, y: 0, z: 90}
-  EndSize: {x: 0, y: 0, z: 0}
-  EndPosition: {x: 0, y: 0, z: 0}
-  Obj: {fileID: 2355555032784322876}
+  Reverse: 1
   Smooth: 1
+  Toggle: 1
+  Interactive: 1
+  EnableSound: 0
+  EnableTrigger: 0
+  Tag: 
+  AnimationObject: {fileID: 0}
+  AnimationRotation: {x: 0, y: 0, z: 0}
   RotationSpeed: 0
-  SmoothRotationSpeed: 10
-  SmoothPositionSpeed: 0
-  PositionSpeed: 0
-  SmoothScaleSpeed: 0
+  AnimationMove: {x: 0, y: 0, z: 0}
+  MoveSpeed: 0
+  GlobalMove: 1
+  AnimationScale: {x: 0, y: 0, z: 0}
   ScaleSpeed: 0
+  AudioPlayer: {fileID: 0}
+  BasicAudio: {fileID: 0}
+  ReverseAudio: {fileID: 0}
+  RigidbodyObject: {fileID: 0}
+  ToggleGravity: 0
+  BasicGravity: 0
+  Mass: 0
+  Force: 0
+  BasicDirection: 0
+  ReverseDirection: 0
+  direction: {x: 0, y: 0, z: 0}
   selectedTab: 0
   selectedTabMain: 0
-  audiosource: {fileID: 0}
-  StartAudio: {fileID: 0}
-  EndAudio: {fileID: 0}
+  ChangeMaterial: 0
+  BaseMaterial: {fileID: 0}
+  ReverseMaterial: {fileID: 0}
+  MaterialID: 0
+  RenderObjects: []
 --- !u!65 &7821304193023597271
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -40269,36 +39761,40 @@ MonoBehaviour:
   ReverseTriggerEvent:
     m_PersistentCalls:
       m_Calls: []
-  Reverse: 1
-  EnableSound: 0
   Playing: 0
-  Interactive: 1
-  EnableEvent: 0
-  EnableTrigger: 0
-  Toggle: 1
-  ToggleEvent: 0
-  ToggleTrigger: 0
-  Looping: 0
-  LoopingReverse: 0
-  isactivate: 0
-  isactivatetrigger: 0
-  Tag: 
-  EndRotation: {x: 0, y: 90, z: 0}
-  EndSize: {x: 0, y: 0, z: 0}
-  EndPosition: {x: 0, y: 0, z: 0}
-  Obj: {fileID: 979707362}
+  Reverse: 1
   Smooth: 1
+  Toggle: 1
+  Interactive: 1
+  EnableSound: 0
+  EnableTrigger: 0
+  Tag: 
+  AnimationObject: {fileID: 0}
+  AnimationRotation: {x: 0, y: 0, z: 0}
   RotationSpeed: 0
-  SmoothRotationSpeed: 5
-  SmoothPositionSpeed: 0
-  PositionSpeed: 0
-  SmoothScaleSpeed: 0
+  AnimationMove: {x: 0, y: 0, z: 0}
+  MoveSpeed: 0
+  GlobalMove: 1
+  AnimationScale: {x: 0, y: 0, z: 0}
   ScaleSpeed: 0
+  AudioPlayer: {fileID: 0}
+  BasicAudio: {fileID: 0}
+  ReverseAudio: {fileID: 0}
+  RigidbodyObject: {fileID: 0}
+  ToggleGravity: 0
+  BasicGravity: 0
+  Mass: 0
+  Force: 0
+  BasicDirection: 0
+  ReverseDirection: 0
+  direction: {x: 0, y: 0, z: 0}
   selectedTab: 0
   selectedTabMain: 0
-  audiosource: {fileID: 0}
-  StartAudio: {fileID: 0}
-  EndAudio: {fileID: 0}
+  ChangeMaterial: 0
+  BaseMaterial: {fileID: 0}
+  ReverseMaterial: {fileID: 0}
+  MaterialID: 0
+  RenderObjects: []
 --- !u!23 &8162194172276985860
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -40505,36 +40001,40 @@ MonoBehaviour:
   ReverseTriggerEvent:
     m_PersistentCalls:
       m_Calls: []
-  Reverse: 1
-  EnableSound: 1
   Playing: 1
-  Interactive: 1
-  EnableEvent: 1
-  EnableTrigger: 0
-  Toggle: 1
-  ToggleEvent: 1
-  ToggleTrigger: 0
-  Looping: 0
-  LoopingReverse: 0
-  isactivate: 0
-  isactivatetrigger: 0
-  Tag: 
-  EndRotation: {x: -10, y: 0, z: 0}
-  EndSize: {x: 0, y: 0, z: 0}
-  EndPosition: {x: 0, y: 0, z: 0}
-  Obj: {fileID: 0}
+  Reverse: 1
   Smooth: 1
+  Toggle: 1
+  Interactive: 1
+  EnableSound: 1
+  EnableTrigger: 0
+  Tag: 
+  AnimationObject: {fileID: 0}
+  AnimationRotation: {x: 0, y: 0, z: 0}
   RotationSpeed: 100
-  SmoothRotationSpeed: 5
-  SmoothPositionSpeed: 5
-  PositionSpeed: 100
-  SmoothScaleSpeed: 5
+  AnimationMove: {x: 0, y: 0, z: 0}
+  MoveSpeed: 0
+  GlobalMove: 1
+  AnimationScale: {x: 0, y: 0, z: 0}
   ScaleSpeed: 100
+  AudioPlayer: {fileID: 0}
+  BasicAudio: {fileID: 0}
+  ReverseAudio: {fileID: 0}
+  RigidbodyObject: {fileID: 0}
+  ToggleGravity: 0
+  BasicGravity: 0
+  Mass: 0
+  Force: 0
+  BasicDirection: 0
+  ReverseDirection: 0
+  direction: {x: 0, y: 0, z: 0}
   selectedTab: 4
   selectedTabMain: 0
-  audiosource: {fileID: 685404040}
-  StartAudio: {fileID: 8300000, guid: 9e197a3df58a72d4ba8b6a3df9db0d22, type: 3}
-  EndAudio: {fileID: 8300000, guid: 9e197a3df58a72d4ba8b6a3df9db0d22, type: 3}
+  ChangeMaterial: 0
+  BaseMaterial: {fileID: 0}
+  ReverseMaterial: {fileID: 0}
+  MaterialID: 0
+  RenderObjects: []
 --- !u!65 &8242266127187095927
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -40726,7 +40226,7 @@ MonoBehaviour:
   ReverseEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8655584760939065868}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: RoomChanger, Assembly-CSharp
         m_MethodName: ChangeRoom
         m_Mode: 1
@@ -40744,36 +40244,40 @@ MonoBehaviour:
   ReverseTriggerEvent:
     m_PersistentCalls:
       m_Calls: []
-  Reverse: 1
-  EnableSound: 0
   Playing: 0
-  Interactive: 1
-  EnableEvent: 0
-  EnableTrigger: 0
-  Toggle: 1
-  ToggleEvent: 1
-  ToggleTrigger: 0
-  Looping: 0
-  LoopingReverse: 0
-  isactivate: 0
-  isactivatetrigger: 0
-  Tag: 
-  EndRotation: {x: 0, y: 0, z: 90}
-  EndSize: {x: 0, y: 0, z: 0}
-  EndPosition: {x: 0, y: 0, z: 0}
-  Obj: {fileID: 1754673860}
+  Reverse: 0
   Smooth: 1
-  RotationSpeed: 5
-  SmoothRotationSpeed: 5
-  SmoothPositionSpeed: 0
-  PositionSpeed: 0
-  SmoothScaleSpeed: 0
+  Toggle: 1
+  Interactive: 1
+  EnableSound: 0
+  EnableTrigger: 0
+  Tag: 
+  AnimationObject: {fileID: 0}
+  AnimationRotation: {x: 0, y: 0, z: 0}
+  RotationSpeed: 0
+  AnimationMove: {x: 0, y: 0, z: 0}
+  MoveSpeed: 0
+  GlobalMove: 1
+  AnimationScale: {x: 0, y: 0, z: 0}
   ScaleSpeed: 0
-  selectedTab: 4
+  AudioPlayer: {fileID: 0}
+  BasicAudio: {fileID: 0}
+  ReverseAudio: {fileID: 0}
+  RigidbodyObject: {fileID: 1754673867}
+  ToggleGravity: 0
+  BasicGravity: 0
+  Mass: 0
+  Force: 260
+  BasicDirection: 2
+  ReverseDirection: 8
+  direction: {x: 0, y: 0, z: 0}
+  selectedTab: 2
   selectedTabMain: 0
-  audiosource: {fileID: 0}
-  StartAudio: {fileID: 0}
-  EndAudio: {fileID: 0}
+  ChangeMaterial: 0
+  BaseMaterial: {fileID: 0}
+  ReverseMaterial: {fileID: 0}
+  MaterialID: 0
+  RenderObjects: []
 --- !u!1 &8567732727946865473
 GameObject:
   m_ObjectHideFlags: 0
@@ -40863,106 +40367,40 @@ MonoBehaviour:
   ReverseTriggerEvent:
     m_PersistentCalls:
       m_Calls: []
-  Reverse: 1
-  EnableSound: 1
   Playing: 0
-  Interactive: 1
-  EnableEvent: 0
-  EnableTrigger: 0
-  Toggle: 1
-  ToggleEvent: 0
-  ToggleTrigger: 0
-  Looping: 0
-  LoopingReverse: 0
-  isactivate: 0
-  isactivatetrigger: 0
-  Tag: 
-  EndRotation: {x: 0, y: 0, z: 0}
-  EndSize: {x: 0, y: 0, z: 0}
-  EndPosition: {x: 0, y: 0, z: 0.426}
-  Obj: {fileID: 0}
+  Reverse: 1
   Smooth: 1
+  Toggle: 1
+  Interactive: 1
+  EnableSound: 1
+  EnableTrigger: 0
+  Tag: 
+  AnimationObject: {fileID: 0}
+  AnimationRotation: {x: 0, y: 0, z: 0}
   RotationSpeed: 0
-  SmoothRotationSpeed: 0
-  SmoothPositionSpeed: 5
-  PositionSpeed: 0
-  SmoothScaleSpeed: 0
+  AnimationMove: {x: 0, y: 0, z: 0}
+  MoveSpeed: 0
+  GlobalMove: 1
+  AnimationScale: {x: 0, y: 0, z: 0}
   ScaleSpeed: 0
+  AudioPlayer: {fileID: 0}
+  BasicAudio: {fileID: 0}
+  ReverseAudio: {fileID: 0}
+  RigidbodyObject: {fileID: 0}
+  ToggleGravity: 0
+  BasicGravity: 0
+  Mass: 0
+  Force: 0
+  BasicDirection: 0
+  ReverseDirection: 0
+  direction: {x: 0, y: 0, z: 0}
   selectedTab: 4
   selectedTabMain: 0
-  audiosource: {fileID: 1414612115}
-  StartAudio: {fileID: 8300000, guid: 987ee37451af4894ab25fa351744315c, type: 3}
-  EndAudio: {fileID: 8300000, guid: 97ec8fbbd2f43664db8902f1fb67a442, type: 3}
---- !u!114 &8655584760939065866
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5467285085310021288}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a93ee72d181cba4e903090ad9461a5f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  items:
-  - Name: Rabbit Key
-    Description: A key that looks like a rabbit's head. If you collect enough, something
-      might happen.
-    ID: 0
-    Icon: {fileID: 21300000, guid: d64bf6145efdeb84e8263eb6cc4eb709, type: 3}
-    Object: {fileID: 919132148075237476}
-    count: 1
-  - Name: CrowBar
-    Description: CrowBar
-    ID: 0
-    Icon: {fileID: 21300000, guid: 84f12c3288be8d84d8af78ea477f635c, type: 3}
-    Object: {fileID: 909615020958647054}
-    count: 1
-  IconUI:
-  - {fileID: 1062000921}
-  - {fileID: 1014937715}
-  - {fileID: 1196080225}
-  - {fileID: 1830234688}
-  - {fileID: 1174976304}
-  - {fileID: 1691612054}
-  - {fileID: 978457777}
-  - {fileID: 1916482018}
-  - {fileID: 263563651}
-  _animator: {fileID: 507946913}
-  rectTransform: {fileID: 1062000920}
---- !u!114 &8655584760939065867
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5467285085310021288}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2738112c7a8f5146a56629a8bd39b61, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Interact: 101
-  Jump: 32
-  Run: 304
-  Crouch: 306
-  Inventory: 9
---- !u!114 &8655584760939065868
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5467285085310021288}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d95c41e6810291445a2eeb19fe00f6cd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  room1: {fileID: 0}
-  room2: {fileID: 668549788}
-  firstroom: 1
+  ChangeMaterial: 0
+  BaseMaterial: {fileID: 0}
+  ReverseMaterial: {fileID: 0}
+  MaterialID: 0
+  RenderObjects: []
 --- !u!1 &8776107633493593304
 GameObject:
   m_ObjectHideFlags: 0
@@ -41249,36 +40687,40 @@ MonoBehaviour:
   ReverseTriggerEvent:
     m_PersistentCalls:
       m_Calls: []
-  Reverse: 1
-  EnableSound: 0
   Playing: 0
-  Interactive: 1
-  EnableEvent: 1
-  EnableTrigger: 0
-  Toggle: 1
-  ToggleEvent: 1
-  ToggleTrigger: 0
-  Looping: 0
-  LoopingReverse: 0
-  isactivate: 0
-  isactivatetrigger: 0
-  Tag: 
-  EndRotation: {x: 0, y: 0, z: 0}
-  EndSize: {x: 0, y: 0, z: 0}
-  EndPosition: {x: 0, y: -0.555, z: 0}
-  Obj: {fileID: 0}
+  Reverse: 1
   Smooth: 1
+  Toggle: 1
+  Interactive: 1
+  EnableSound: 0
+  EnableTrigger: 0
+  Tag: 
+  AnimationObject: {fileID: 0}
+  AnimationRotation: {x: 0, y: 0, z: 0}
   RotationSpeed: 0
-  SmoothRotationSpeed: 0
-  SmoothPositionSpeed: 5
-  PositionSpeed: 0
-  SmoothScaleSpeed: 0
+  AnimationMove: {x: 0, y: 0, z: 0}
+  MoveSpeed: 0
+  GlobalMove: 1
+  AnimationScale: {x: 0, y: 0, z: 0}
   ScaleSpeed: 0
+  AudioPlayer: {fileID: 0}
+  BasicAudio: {fileID: 0}
+  ReverseAudio: {fileID: 0}
+  RigidbodyObject: {fileID: 0}
+  ToggleGravity: 0
+  BasicGravity: 0
+  Mass: 0
+  Force: 0
+  BasicDirection: 0
+  ReverseDirection: 0
+  direction: {x: 0, y: 0, z: 0}
   selectedTab: 1
   selectedTabMain: 1
-  audiosource: {fileID: 0}
-  StartAudio: {fileID: 0}
-  EndAudio: {fileID: 0}
+  ChangeMaterial: 0
+  BaseMaterial: {fileID: 0}
+  ReverseMaterial: {fileID: 0}
+  MaterialID: 0
+  RenderObjects: []
 --- !u!65 &8918280149629894049
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -41583,7 +41025,6 @@ SceneRoots:
   - {fileID: 1595093211}
   - {fileID: 796752624}
   - {fileID: 1610791001}
-  - {fileID: 5467285085310021289}
   - {fileID: 1921985676}
   - {fileID: 1344393169}
   - {fileID: 177634387}
@@ -41595,3 +41036,4 @@ SceneRoots:
   - {fileID: 2063758933}
   - {fileID: 543450651860327968}
   - {fileID: 1048054033}
+  - {fileID: 427711279}

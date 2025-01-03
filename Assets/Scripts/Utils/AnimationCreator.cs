@@ -143,7 +143,7 @@ public class AnimationCreator : MonoBehaviour
             {
                 List<Material> mat = new List<Material>();
                 RenderObjects[i].GetMaterials(mat);
-                mat[MaterialID] = BaseMaterial;
+                mat[MaterialID] = ReverseMaterial;
                 RenderObjects[i].SetMaterials(mat);
             }
         }
