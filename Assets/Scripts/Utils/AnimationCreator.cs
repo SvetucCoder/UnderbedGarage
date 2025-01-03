@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEditor;
 using UnityEngine;
@@ -16,7 +17,7 @@ public enum Direction
     Right = 1 << 3,    // 8
     Up = 1 << 4,       // 16
     Down = 1 << 5      // 32
-}
+} 
 
 public class AnimationCreator : MonoBehaviour
 {
@@ -73,6 +74,12 @@ public class AnimationCreator : MonoBehaviour
     public int selectedTab = 0;
     public int selectedTabMain = 0;
 
+    public bool ChangeMaterial;
+    public Material BaseMaterial;
+    public Material ReverseMaterial;
+    public int MaterialID;
+    public Renderer[] RenderObjects;
+
     void Start()
     {
         if (AnimationObject == null) AnimationObject = gameObject.transform;
@@ -108,6 +115,16 @@ public class AnimationCreator : MonoBehaviour
     }
     public void BasicPlay()
     {
+        if (ChangeMaterial)
+        {
+            for(int i = 0; i < RenderObjects.Length; i++)
+            {
+                List<Material> mat = new List<Material>();
+                RenderObjects[i].GetMaterials(mat);
+                mat[MaterialID] = BaseMaterial;
+                RenderObjects[i].SetMaterials(mat);
+            }
+        }
         if (ToggleGravity)
         {
             RigidbodyObject.useGravity = BasicGravity;
@@ -115,11 +132,21 @@ public class AnimationCreator : MonoBehaviour
         ChangeDirection(BasicDirection);
         ExecuteClick();
         if (EnableSound) AudioPlayer.PlayOneShot(BasicAudio);
-        RigidbodyObject.AddForce(direction * Force, ForceMode.Impulse);
+        if (RigidbodyObject != null) RigidbodyObject.AddForce(direction * Force, ForceMode.Impulse);
 
     }
     public void ReversePlay()
     {
+        if (ChangeMaterial)
+        {
+            for (int i = 0; i < RenderObjects.Length; i++)
+            {
+                List<Material> mat = new List<Material>();
+                RenderObjects[i].GetMaterials(mat);
+                mat[MaterialID] = BaseMaterial;
+                RenderObjects[i].SetMaterials(mat);
+            }
+        }
         if (ToggleGravity)
         {
             RigidbodyObject.useGravity = !BasicGravity;
@@ -127,7 +154,7 @@ public class AnimationCreator : MonoBehaviour
         ChangeDirection(ReverseDirection);
         ExecuteReverseClick();
         if (EnableSound) AudioPlayer.PlayOneShot(ReverseAudio);
-        RigidbodyObject.AddForce(direction * Force, ForceMode.Impulse);
+        if(RigidbodyObject != null) RigidbodyObject.AddForce(direction * Force, ForceMode.Impulse);
     }
     public void Interact()
     {
@@ -319,9 +346,13 @@ public class CustomScriptEditor : Editor
             {
                 customScript.selectedTab = 2;
             }
-            if (GUILayout.Button("Sound"))
+            if (GUILayout.Button("Materials"))
             {
                 customScript.selectedTab = 3;
+            }
+            if (GUILayout.Button("Sound"))
+            {
+                customScript.selectedTab = 4;
             }
             GUILayout.EndVertical();
             GUILayout.BeginVertical();
@@ -329,7 +360,7 @@ public class CustomScriptEditor : Editor
             switch (customScript.selectedTab)
             {
                 case 0:
-                    ShowTab1(customScript);
+                    ShowTab(customScript);
                     break;
                 case 1:
                     ShowTab2(customScript);
@@ -339,6 +370,9 @@ public class CustomScriptEditor : Editor
                     break;
                 case 3:
                     ShowTab4(customScript);
+                    break;
+                case 4:
+                    ShowTab5(customScript);
                     break;
             }
             GUILayout.EndVertical();
@@ -408,6 +442,7 @@ public class CustomScriptEditor : Editor
     SerializedProperty onClickEventProperty2;
     SerializedProperty onClickEventProperty3;
     SerializedProperty onClickEventProperty4;
+    SerializedProperty renderObjectsProperty;
     private void OnEnable()
     {
         // Получаем ссылку на UnityEvent
@@ -415,6 +450,7 @@ public class CustomScriptEditor : Editor
         onClickEventProperty2 = serializedObject.FindProperty("ReverseEvent");
         onClickEventProperty3 = serializedObject.FindProperty("BasicTriggerEvent");
         onClickEventProperty4 = serializedObject.FindProperty("ReverseTriggerEvent");
+        renderObjectsProperty = serializedObject.FindProperty("RenderObjects");
     }
 
     private void ShowInteractTab1(AnimationCreator customScript)
@@ -454,7 +490,7 @@ public class CustomScriptEditor : Editor
          
     }
     // Функции для отображения содержимого вкладок
-    private void ShowTab1(AnimationCreator customScript)
+    private void ShowTab(AnimationCreator customScript)
     {
         customScript.Playing = EditorGUILayout.Toggle("Play", customScript.Playing);
         customScript.Reverse = EditorGUILayout.Toggle("Reverse", customScript.Reverse);
@@ -494,11 +530,22 @@ public class CustomScriptEditor : Editor
     }
     private void ShowTab4(AnimationCreator customScript)
     {
+        customScript.ChangeMaterial = EditorGUILayout.Toggle("Change Material", customScript.ChangeMaterial);
+        customScript.MaterialID = EditorGUILayout.IntField("MaterialID", customScript.MaterialID);
+        serializedObject.Update();
+        EditorGUILayout.PropertyField(renderObjectsProperty, new GUIContent("Render Objects"), true);
+        serializedObject.ApplyModifiedProperties();
+        customScript.BaseMaterial = (Material)EditorGUILayout.ObjectField("Basic Material", customScript.BaseMaterial, typeof(Material), false);
+        customScript.ReverseMaterial = (Material)EditorGUILayout.ObjectField("Reverse Material", customScript.ReverseMaterial, typeof(Material), false);
+        
+    }
+    private void ShowTab5(AnimationCreator customScript)
+    {
         customScript.EnableSound = EditorGUILayout.Toggle("Enable Audio", customScript.EnableSound);
-        customScript.AudioPlayer = (AudioSource)EditorGUILayout.ObjectField("Player", customScript.AudioPlayer, typeof(AudioSource),true);
+        customScript.AudioPlayer = (AudioSource)EditorGUILayout.ObjectField("Player", customScript.AudioPlayer, typeof(AudioSource), true);
         customScript.BasicAudio = (AudioClip)EditorGUILayout.ObjectField("Basic Sound", customScript.BasicAudio, typeof(AudioClip), false);
         customScript.ReverseAudio = (AudioClip)EditorGUILayout.ObjectField("Reverse Sound", customScript.ReverseAudio, typeof(AudioClip), false);
-        
+
     }
 }
 internal static class UnityAPI
