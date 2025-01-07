@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: e5c523da961e7974899f54124c66ad69
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 154529
+  packageName: '#NVJOB FPS Counter and Graph'
+  packageVersion: 2.0
+  assetPath: Assets/#NVJOB FPS Counter and Graph/FPS Counter and Graph/FPSCounter.cs
+  uploadId: 356255

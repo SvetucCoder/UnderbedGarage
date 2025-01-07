@@ -24,7 +24,7 @@ public class Inventory : MonoBehaviour
                 _haveitems.Add(items[i]);
             }
         }
-        DisplayInventory();
+       // DisplayInventory();
     }
     //Подонки.
     public void AddItem(int ID, int count)

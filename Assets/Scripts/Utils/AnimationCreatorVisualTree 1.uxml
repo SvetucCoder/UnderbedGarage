@@ -1,0 +1,22 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <engine:VisualElement style="flex-grow: 1; flex-wrap: nowrap; align-items: flex-start;">
+        <engine:VisualElement style="flex-grow: 1; flex-wrap: nowrap; flex-direction: row; flex-shrink: 1; align-items: center; justify-content: flex-start; flex-basis: auto; align-content: flex-start; margin-bottom: 0; width: 100%; margin-top: 0; margin-right: 0; margin-left: 0;">
+            <engine:Vector3Field label="Position" name="PositonVector" data-source-type="UnityEngine.Rendering.ProbeVolume+&lt;&gt;c__DisplayClass31_0+&lt;&lt;OnDrawGizmos&gt;g__GetVisibleBricks|0&gt;d, Unity.RenderPipelines.Core.Runtime" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; min-width: 300px; width: 80%;" />
+            <engine:Button text="Round" name="PositonBtn" style="width: 7%; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;" />
+            <engine:Button text="Round 2" name="PositonBtn2" enable-rich-text="true" style="width: 8%; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;" />
+            <engine:Button text="Reset" name="ResetPositonBtn" style="width: 5%; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;" />
+        </engine:VisualElement>
+        <engine:VisualElement name="VisualElement" style="flex-grow: 1; flex-wrap: nowrap; flex-direction: row; flex-shrink: 1; align-items: center; justify-content: flex-start; flex-basis: auto; align-content: flex-start; margin-bottom: 0; margin-top: 0; margin-right: 0; margin-left: 0; width: 100%;">
+            <engine:Vector3Field label="Rotation" name="RotationVector" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; min-width: auto; width: 80%;" />
+            <engine:Button text="Round" name="RotationBtn" style="width: 7%; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;" />
+            <engine:Button text="Round 2" name="RotationBtn2" style="width: 8%; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;" />
+            <engine:Button text="Reset" name="ResetRotationBtn" style="width: 5%; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;" />
+        </engine:VisualElement>
+        <engine:VisualElement style="flex-grow: 1; flex-wrap: nowrap; flex-direction: row; flex-shrink: 1; align-items: center; justify-content: flex-start; flex-basis: auto; align-content: flex-start; margin-bottom: 0; width: 100%; margin-top: 0; margin-right: 0; margin-left: 0;">
+            <engine:Vector3Field label="Rotation" name="ScaleVector" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; min-width: auto; width: 80%;" />
+            <engine:Button text="Round" name="ScaleBtn" style="width: 7%; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;" />
+            <engine:Button text="Round 2" name="ScaleBtn2" style="width: 8%; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;" />
+            <engine:Button text="Reset" name="ResetScaleBtn" style="width: 5%; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;" />
+        </engine:VisualElement>
+    </engine:VisualElement>
+</engine:UXML>

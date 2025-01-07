@@ -1,0 +1,95 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <engine:TabView tabindex="0" usage-hints="None" reorderable="false" style="flex-grow: 0; justify-content: space-evenly; align-items: flex-start; margin-left: 5px; flex-direction: column; align-content: auto; align-self: auto; font-size: 14px; border-left-color: rgba(0, 0, 0, 0); border-right-color: rgba(0, 0, 0, 0); border-top-color: rgba(0, 0, 0, 0); border-bottom-color: rgba(0, 0, 0, 0);">
+        <engine:Tab label="General" name="Tab" style="flex-grow: 0; min-width: auto; flex-direction: column; align-items: auto; align-content: auto; font-size: 14px;">
+            <engine:TabView tabindex="0" style="align-items: flex-start;">
+                <engine:Tab label="Animation" name="Tab" enabled="true" style="align-items: flex-start; opacity: 1; flex-shrink: 0; justify-content: flex-start; align-content: auto;">
+                    <engine:Label text="Motion" style="height: 35px; margin-top: 10px; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; -unity-text-align: middle-center; font-size: 32px; -unity-font-style: bold;" />
+                    <engine:VisualElement style="flex-grow: 1; opacity: 1; left: 5px; top: 5px; background-color: rgb(70, 70, 70); border-top-width: 2px; border-right-width: 2px; border-bottom-width: 2px; border-left-width: 2px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); visibility: visible; overflow: visible; display: flex; padding-left: 10px; padding-top: 10px; padding-bottom: 10px; padding-right: 10px; justify-content: center; align-items: flex-start;">
+                        <engine:VisualElement style="flex-grow: 1; flex-wrap: nowrap; flex-direction: row; flex-shrink: 1; align-items: center; justify-content: center; flex-basis: auto; align-content: flex-start; margin-bottom: 10px;">
+                            <editor:ObjectField label="Object" binding-path="Transform" type="UnityEngine.Transform, UnityEngine.CoreModule" name="ObjectField" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; min-width: 300px;" />
+                        </engine:VisualElement>
+                        <engine:VisualElement style="flex-grow: 1; flex-wrap: nowrap; flex-direction: row; flex-shrink: 1; align-items: center; justify-content: center; flex-basis: auto; align-content: flex-start; margin-bottom: 10px;">
+                            <engine:Vector3Field label="Move" binding-path="AnimationMove" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; min-width: 300px;" />
+                            <engine:FloatField label="Speed" value="5" binding-path="MoveSpeed" name="FloatField" password="false" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 10px; justify-content: flex-start; align-self: auto; align-content: auto; min-width: 200px;" />
+                            <engine:Toggle label="Global" binding-path="GlobalMove" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 10px;" />
+                        </engine:VisualElement>
+                        <engine:VisualElement style="flex-grow: 1; flex-wrap: nowrap; flex-direction: row; flex-shrink: 1; align-items: center; justify-content: center; flex-basis: auto; align-content: flex-start; margin-bottom: 10px;">
+                            <engine:Vector3Field label="Rotation" binding-path="AnimationRotation" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; min-width: 300px;" />
+                            <engine:FloatField label="Speed" value="5" binding-path="RotationSpeed" name="FloatField" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 10px; justify-content: flex-start; align-self: auto; align-content: auto; min-width: 200px;" />
+                        </engine:VisualElement>
+                        <engine:VisualElement style="flex-grow: 1; flex-wrap: nowrap; flex-direction: row; flex-shrink: 1; align-items: center; justify-content: center; flex-basis: auto; align-content: flex-start; margin-bottom: 0; margin-top: 0; margin-right: 0; margin-left: 0;">
+                            <engine:Vector3Field label="Scale" binding-path="AnimationScale" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; min-width: 300px;" />
+                            <engine:FloatField label="Speed" value="5" binding-path="ScaleSpeed" name="FloatField" password="false" max-length="1002" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 10px; justify-content: flex-start; align-self: auto; align-content: auto; align-items: center; flex-direction: row; flex-wrap: nowrap; -unity-text-align: middle-left; white-space: normal; text-overflow: clip; -unity-font-style: normal; flex-shrink: 0; flex-basis: auto; overflow: hidden; min-width: 200px;" />
+                        </engine:VisualElement>
+                    </engine:VisualElement>
+                    <engine:Label text="Physics" style="height: 35px; margin-top: 10px; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; -unity-text-align: middle-center; font-size: 32px; -unity-font-style: bold;" />
+                    <engine:VisualElement style="flex-grow: 1; opacity: 1; left: 5px; top: 5px; background-color: rgb(70, 70, 70); border-top-width: 2px; border-right-width: 2px; border-bottom-width: 2px; border-left-width: 2px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); visibility: visible; overflow: visible; display: flex; padding-left: 10px; padding-top: 10px; padding-bottom: 10px; padding-right: 10px; justify-content: center; align-items: flex-start;">
+                        <engine:VisualElement style="flex-grow: 1; flex-wrap: nowrap; flex-direction: row; flex-shrink: 1; align-items: center; justify-content: center; flex-basis: auto; align-content: flex-start; margin-bottom: 10px;">
+                            <editor:ObjectField label="Rigidbody" binding-path="RigidbodyObject" type="UnityEngine.Rigidbody, UnityEngine.PhysicsModule" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; min-width: 300px;" />
+                        </engine:VisualElement>
+                        <engine:VisualElement style="flex-grow: 1; flex-wrap: nowrap; flex-direction: row; flex-shrink: 1; align-items: center; justify-content: center; flex-basis: auto; align-content: flex-start; margin-bottom: 10px;">
+                            <engine:FloatField label="Force" value="0" binding-path="Force" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; min-width: 150px; -unity-text-align: upper-left;" />
+                        </engine:VisualElement>
+                        <engine:VisualElement style="flex-grow: 1; flex-wrap: nowrap; flex-direction: row; flex-shrink: 1; align-items: center; justify-content: center; flex-basis: auto; align-content: flex-start; margin-bottom: 0; margin-top: 0; margin-right: 0; margin-left: 0;">
+                            <engine:EnumField label="Direction" value="CameraMotionOnly" binding-path="BasicDirection" include-obsolete-values="true" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; min-width: 300px;" />
+                            <engine:EnumField label="Reverse Direction" value="CameraMotionOnly" binding-path="ReverseDirection" include-obsolete-values="true" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 10px; padding-left: 0; min-width: 300px;" />
+                        </engine:VisualElement>
+                    </engine:VisualElement>
+                    <engine:Label text="Sound" style="height: 35px; margin-top: 10px; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; -unity-text-align: middle-center; font-size: 32px; -unity-font-style: bold;" />
+                    <engine:VisualElement style="flex-grow: 1; opacity: 1; left: 5px; top: 5px; background-color: rgb(70, 70, 70); border-top-width: 2px; border-right-width: 2px; border-bottom-width: 2px; border-left-width: 2px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); visibility: visible; overflow: visible; display: flex; padding-left: 10px; padding-top: 10px; padding-bottom: 10px; padding-right: 10px; justify-content: center; align-items: flex-start;">
+                        <engine:VisualElement style="flex-grow: 1; flex-wrap: nowrap; flex-direction: row; flex-shrink: 1; align-items: center; justify-content: center; flex-basis: auto; align-content: flex-start; margin-bottom: 10px;">
+                            <engine:Toggle label="Enable" binding-path="EnableSound" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;" />
+                        </engine:VisualElement>
+                        <engine:VisualElement style="flex-grow: 1; flex-wrap: nowrap; flex-direction: row; flex-shrink: 1; align-items: center; justify-content: center; flex-basis: auto; align-content: flex-start; margin-bottom: 10px;">
+                            <editor:ObjectField label="AudioPlayer" binding-path="AudioPlayer" type="UnityEngine.AudioSource, UnityEngine.AudioModule" allow-scene-objects="true" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; min-width: 300px;" />
+                        </engine:VisualElement>
+                        <engine:VisualElement style="flex-grow: 1; flex-wrap: nowrap; flex-direction: row; flex-shrink: 1; align-items: center; justify-content: center; flex-basis: auto; align-content: flex-start; margin-bottom: 0;">
+                            <editor:ObjectField label="Sound" binding-path="BasicAudio" type="UnityEngine.AudioClip, UnityEngine.AudioModule" allow-scene-objects="false" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; min-width: 300px;" />
+                            <editor:ObjectField label="Reverse Sound" binding-path="BasicAudio" type="UnityEngine.AudioClip, UnityEngine.AudioModule" allow-scene-objects="false" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 10px; min-width: 300px;" />
+                        </engine:VisualElement>
+                    </engine:VisualElement>
+                    <engine:Label text="Material" style="height: 35px; margin-top: 10px; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; -unity-text-align: middle-center; font-size: 32px; -unity-font-style: bold;" />
+                    <engine:VisualElement style="flex-grow: 1; opacity: 1; left: 5px; top: 5px; background-color: rgb(70, 70, 70); border-top-width: 2px; border-right-width: 2px; border-bottom-width: 2px; border-left-width: 2px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); visibility: visible; overflow: visible; display: flex; padding-left: 10px; padding-top: 10px; padding-bottom: 10px; padding-right: 10px; justify-content: center; align-items: flex-start;">
+                        <engine:VisualElement style="flex-grow: 1; flex-wrap: nowrap; flex-direction: row; flex-shrink: 1; align-items: center; justify-content: center; flex-basis: auto; align-content: flex-start; margin-bottom: 10px;">
+                            <editor:PropertyField binding-path="RenderObjects" label="Render Objects" style="min-width: 600px;" />
+                            <engine:FloatField label="ID" value="5" binding-path="MaterialID" />
+                        </engine:VisualElement>
+                        <engine:VisualElement style="flex-grow: 1; flex-wrap: nowrap; flex-direction: row; flex-shrink: 1; align-items: center; justify-content: center; flex-basis: auto; align-content: flex-start; margin-bottom: 0;">
+                            <editor:ObjectField label="Material" binding-path="BaseMaterial" type="UnityEngine.Material, UnityEngine.CoreModule" allow-scene-objects="false" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; min-width: 300px;" />
+                            <editor:ObjectField label="Reverse Material" binding-path="ReverseMaterial" type="UnityEngine.Material, UnityEngine.CoreModule" allow-scene-objects="false" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 10px; min-width: 300px;" />
+                        </engine:VisualElement>
+                    </engine:VisualElement>
+                </engine:Tab>
+                <engine:Tab label="Interactive" name="Tab" enabled="true" style="align-items: flex-start; opacity: 1; flex-shrink: 0; justify-content: flex-start; align-content: auto;">
+                    <engine:Label text="Basic" style="height: 35px; margin-top: 10px; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; -unity-text-align: middle-center; font-size: 32px; -unity-font-style: bold;" />
+                    <engine:VisualElement style="flex-grow: 1; opacity: 1; left: 5px; top: 5px; background-color: rgb(70, 70, 70); border-top-width: 2px; border-right-width: 2px; border-bottom-width: 2px; border-left-width: 2px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); visibility: visible; overflow: visible; display: flex; padding-left: 10px; padding-top: 10px; padding-bottom: 10px; padding-right: 10px; justify-content: center; align-items: flex-start;">
+                        <engine:VisualElement style="flex-grow: 1; flex-wrap: nowrap; flex-direction: row; flex-shrink: 1; align-items: center; justify-content: center; flex-basis: auto; align-content: flex-start; margin-bottom: 0; margin-top: 0; margin-right: 0; margin-left: 0;">
+                            <editor:PropertyField binding-path="BasicEvent" style="min-width: 600px;" />
+                        </engine:VisualElement>
+                    </engine:VisualElement>
+                    <engine:Label text="Reverse" style="height: 35px; margin-top: 10px; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; -unity-text-align: middle-center; font-size: 32px; -unity-font-style: bold;" />
+                    <engine:VisualElement style="flex-grow: 1; opacity: 1; left: 5px; top: 5px; background-color: rgb(70, 70, 70); border-top-width: 2px; border-right-width: 2px; border-bottom-width: 2px; border-left-width: 2px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); visibility: visible; overflow: visible; display: flex; padding-left: 10px; padding-top: 10px; padding-bottom: 10px; padding-right: 10px; justify-content: center; align-items: flex-start;">
+                        <engine:VisualElement style="flex-grow: 1; flex-wrap: nowrap; flex-direction: row; flex-shrink: 1; align-items: center; justify-content: center; flex-basis: auto; align-content: flex-start; margin-bottom: 0; margin-top: 0; margin-right: 0; margin-left: 0;">
+                            <editor:PropertyField binding-path="ReverseEvent" name="PropertyField" style="min-width: 600px;" />
+                        </engine:VisualElement>
+                    </engine:VisualElement>
+                </engine:Tab>
+            </engine:TabView>
+        </engine:Tab>
+        <engine:Tab label="Settings" name="Tab" style="flex-grow: 0; min-width: auto; flex-direction: column; align-items: auto; align-content: auto; font-size: 14px;">
+            <engine:VisualElement style="flex-grow: 1; opacity: 1; left: 5px; top: 5px; background-color: rgb(70, 70, 70); border-top-width: 2px; border-right-width: 2px; border-bottom-width: 2px; border-left-width: 2px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); visibility: visible; overflow: visible; display: flex; padding-left: 10px; padding-top: 10px; padding-bottom: 10px; padding-right: 10px; justify-content: center; align-items: flex-start;">
+                <engine:VisualElement style="flex-grow: 1; flex-wrap: nowrap; flex-direction: row; flex-shrink: 1; align-items: center; justify-content: center; flex-basis: auto; align-content: flex-start; margin-bottom: 10px;">
+                    <engine:Toggle label="Play" binding-path="Playing" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;" />
+                    <engine:Toggle label="Reverse" binding-path="Reverse" value="false" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 10px;" />
+                </engine:VisualElement>
+                <engine:VisualElement style="flex-grow: 1; flex-wrap: nowrap; flex-direction: row; flex-shrink: 1; align-items: center; justify-content: center; flex-basis: auto; align-content: flex-start; margin-bottom: 10px;">
+                    <engine:Toggle label="Smooth" binding-path="Smooth" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;" />
+                </engine:VisualElement>
+                <engine:VisualElement style="flex-grow: 1; flex-wrap: nowrap; flex-direction: row; flex-shrink: 1; align-items: center; justify-content: center; flex-basis: auto; align-content: flex-start; margin-bottom: 0; margin-top: 0; margin-right: 0; margin-left: 0;">
+                    <engine:Toggle label="Interactive" binding-path="Interactive" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;" />
+                    <engine:Toggle label="Toggle" binding-path="Toggle" value="false" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 10px;" />
+                </engine:VisualElement>
+            </engine:VisualElement>
+        </engine:Tab>
+    </engine:TabView>
+</engine:UXML>
