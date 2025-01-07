@@ -5,7 +5,7 @@ using UnityEngine.Events;
 using UnityEngine.Rendering.HighDefinition;
 using UnityEngine.UIElements;
 
-[CustomEditor(typeof(Transform))] // ”казываем, что редактор будет работать с CustomScript
+/*[CustomEditor(typeof(Transform))] // ”казываем, что редактор будет работать с CustomScript
 
 public class MeshEditor : Editor
 {
@@ -200,4 +200,4 @@ public class MeshEditor : Editor
     {
         return Mathf.Round(value * 100f) / 100f; // ќкругление до 2 знаков после зап€той
     }
-}
+}*/
