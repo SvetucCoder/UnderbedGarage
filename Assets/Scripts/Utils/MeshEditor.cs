@@ -31,7 +31,7 @@ public class MeshEditor : Editor
     {
         VisualElement root = new VisualElement();
         Transform transform = (Transform)target;
-
+        
         VisualTree.CloneTree(root);
         positionField = root.Q<Vector3Field>("PositonVector");
         rotationField = root.Q<Vector3Field>("RotationVector");
@@ -65,7 +65,8 @@ public class MeshEditor : Editor
         // Обработчики изменения значений
         positionField.RegisterValueChangedCallback(evt =>
         {
-            transform.position = evt.newValue;
+            if (transform.parent != null) transform.localPosition = evt.newValue;
+            else transform.position = evt.newValue;
             EditorUtility.SetDirty(transform);
         });
 
@@ -91,7 +92,8 @@ public class MeshEditor : Editor
     {
         if (positionField != null && rotationField != null && scaleField != null)
         {
-            positionField.SetValueWithoutNotify(transform.position);
+            if (transform.parent != null) positionField.SetValueWithoutNotify(transform.localPosition);
+            else positionField.SetValueWithoutNotify(transform.position);
             rotationField.SetValueWithoutNotify(transform.rotation.eulerAngles);
             scaleField.SetValueWithoutNotify(transform.localScale);
         }
@@ -99,7 +101,12 @@ public class MeshEditor : Editor
 
     private void RoundPosition(Transform transform)
     {
-        transform.position = new Vector3(
+        if (transform.parent != null) transform.localPosition = new Vector3(
+            Mathf.Round(transform.localPosition.x),
+            Mathf.Round(transform.localPosition.y),
+            Mathf.Round(transform.localPosition.z)
+        );
+        else transform.position = new Vector3(
             Mathf.Round(transform.position.x),
             Mathf.Round(transform.position.y),
             Mathf.Round(transform.position.z)
@@ -128,7 +135,12 @@ public class MeshEditor : Editor
     }
     private void Round2Position(Transform transform)
     {
-        transform.position = new Vector3(
+        if (transform.parent != null) transform.localPosition = new Vector3(
+            RoundToTwoDecimalPlaces(transform.localPosition.x),
+            RoundToTwoDecimalPlaces(transform.localPosition.y),
+            RoundToTwoDecimalPlaces(transform.localPosition.z)
+        );
+        else transform.position = new Vector3(
             RoundToTwoDecimalPlaces(transform.position.x),
             RoundToTwoDecimalPlaces(transform.position.y),
             RoundToTwoDecimalPlaces(transform.position.z)
