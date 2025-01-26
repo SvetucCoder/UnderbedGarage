@@ -1843,8 +1843,8 @@ MonoBehaviour:
   tessellationFactorFadeStart: 150
   tessellationFactorFadeRange: 1850
   refractionColor: {r: 0.010022826, g: 0.21404114, b: 0.21404114, a: 1}
-  maxRefractionDistance: 0.5
-  absorptionDistance: 1.5
+  maxRefractionDistance: 0.46
+  absorptionDistance: 3.7
   scatteringColor: {r: 0, g: 0.13286833, b: 0.13286833, a: 1}
   ambientScattering: 0.2
   heightScattering: 0.2
@@ -1852,7 +1852,7 @@ MonoBehaviour:
   directLightTipScattering: 0.6
   directLightBodyScattering: 0.5
   maximumHeightOverride: 0
-  caustics: 0
+  caustics: 1
   causticsIntensity: 0.5
   causticsPlaneBlendDistance: 1
   causticsResolution: 256
@@ -1867,7 +1867,7 @@ MonoBehaviour:
   waterCurrentDebugMode: 0
   currentDebugMultiplier: 1
   waterFoamDebugMode: 0
-  underWater: 0
+  underWater: 1
   volumeBounds: {fileID: 0}
   volumeDepth: 50
   volumeHeight: 0
@@ -1876,7 +1876,7 @@ MonoBehaviour:
   underWaterAmbientProbeContribution: 1
   underWaterScatteringColorMode: 0
   underWaterScatteringColor: {r: 0, g: 0.27, b: 0.23, a: 1}
-  underWaterRefraction: 0
+  underWaterRefraction: 1
   decalRegionSize: {x: 200, y: 200}
   decalRegionAnchor: {fileID: 0}
   supportLargeCurrent: 0
@@ -1896,7 +1896,7 @@ MonoBehaviour:
   deformation: 0
   deformationRes: 512
   foam: 1
-  foamResolution: 512
+  foamResolution: 256
   foamPersistenceMultiplier: 0.5
   foamCurrentInfluence: 0.6
   foamColor: {r: 1, g: 1, b: 1, a: 1}
@@ -1952,20 +1952,20 @@ MonoBehaviour:
   repetitionSize: 500
   largeOrientationValue: 0
   largeWindSpeed: 30
-  largeChaos: 0.85
-  largeBand0Multiplier: 1
+  largeChaos: 0.552
+  largeBand0Multiplier: 0.188
   largeBand0FadeMode: 1
   largeBand0FadeStart: 1500
   largeBand0FadeDistance: 3000
-  largeBand1Multiplier: 1
+  largeBand1Multiplier: 0.188
   largeBand1FadeMode: 1
   largeBand1FadeStart: 300
   largeBand1FadeDistance: 800
   ripples: 1
   ripplesMotionMode: 0
   ripplesOrientationValue: 0
-  ripplesWindSpeed: 8
-  ripplesChaos: 0.8
+  ripplesWindSpeed: 6.22
+  ripplesChaos: 0.851
   ripplesFadeMode: 1
   ripplesFadeStart: 50
   ripplesFadeDistance: 200
