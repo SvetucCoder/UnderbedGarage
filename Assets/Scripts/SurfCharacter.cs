@@ -78,7 +78,9 @@
         rb.freezeRotation = true;
         playerCamera = GetComponentInChildren<Camera>();
         Cursor.lockState = CursorLockMode.Locked;
-    } 
+    }
+
+
     void CheckKey()
     {
         isJump = Input.GetKey(key.Jump);
